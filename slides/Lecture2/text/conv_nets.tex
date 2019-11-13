@@ -1,4 +1,5 @@
-\documentclass[handout,xcolor=pdftex,dvipsnames,table,mathserif]{beamer}
+%\documentclass[handout,xcolor=pdftex,dvipsnames,table,mathserif]{beamer}
+\documentclass[xcolor=pdftex,dvipsnames,table,mathserif]{beamer}
 \input{../../setting.tex}
 \usepackage{physics}
 
@@ -480,42 +481,6 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Image classification with a neural network}
-
-  \begin{block}{Input}
-    The input image, containing $p$ pixels, is transformed into a vector of length $p$.
-  \end{block}
-
-  \begin{block}{Output}
-    For $q$ classes, the output will be a vector of length $q$.
-  \end{block}
-
-\pause
-
-  \begin{block}{Example: image of size $4 \times 2$, $4$ possible classes}
-    \centering
-      \includegraphics[width=0.6\textwidth]{network}
-  \end{block}
-
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Image classification using fully-connected layers}
-
-    \centering
-      \includegraphics[width=0.6\textwidth]{network}
-
-      \begin{itemize}[<+->]
-      \item A small image contains at least $100\,000$ pixels
-      \item The number of parameters between two layers of that size is $10^5 \times (10^5 + 1)$!
-      \item This approach is not feasible...
-      \item Moreover, this approach does not take into account the local structure of images.
-      \end{itemize}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Activations}
 
   Different activations (typically ReLU) can be used in the intermediate layers.
@@ -593,8 +558,44 @@
 
   \pause
 
-  Note that the binary cross-entropy we saw during the first lecture is a particular case of cross-entropy.
+  Note that the binary cross-entropy we previously saw is a particular case of cross-entropy.
 
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Image classification with a neural network}
+
+  \begin{block}{Input}
+    The input image, containing $p$ pixels, is transformed into a vector of length $p$.
+  \end{block}
+
+  \begin{block}{Output}
+    For $q$ classes, the output will be a vector of length $q$.
+  \end{block}
+
+\pause
+
+  \begin{block}{Example: image of size $4 \times 2$, $4$ possible classes}
+    \centering
+      \includegraphics[width=0.6\textwidth]{network}
+  \end{block}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Image classification using fully-connected layers}
+
+    \centering
+      \includegraphics[width=0.6\textwidth]{network}
+
+      \begin{itemize}[<+->]
+      \item A small image contains at least $100\,000$ pixels
+      \item The number of parameters between two layers of that size is $10^5 \times (10^5 + 1)$!
+      \item This approach is not feasible...
+      \item Moreover, this approach does not take into account the local structure of images.
+      \end{itemize}
 
 \end{frame}
 
@@ -628,6 +629,41 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{From fully-connected layers to convolutional layers}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Layers representation}
+
+    \begin{block}{}
+      For illustration purposes, in the following slides images and filters will be displayed as rows of neurons - these can be seen as 1D arrays or as sections of 2D arrays.
+
+      We represent connections between neurons. Each such connection is associated to a weight. The bias are not represented, to avoid clutter, but must not be forgotten.
+  \end{block}
+
+  \begin{columns}
+
+    \begin{column}<1->{0.33\textwidth}
+      \begin{center}
+        \includegraphics[width=0.60\textwidth]{image_as_pixels.png}
+      \end{center}
+    \end{column}
+
+    \begin{column}<2->{0.33\textwidth}
+      \begin{center}
+        \includegraphics[width=0.60\textwidth]{image_as_neurons.png}
+
+      \end{center}
+    \end{column}
+
+    \begin{column}<3->{0.33\textwidth}
+      \begin{center}
+        \includegraphics[width=0.15\textwidth]{image_as_neurons_col.png}
+
+      \end{center}
+    \end{column}
+
+  \end{columns}
+
+
+\end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -635,18 +671,12 @@
   \frametitle{Towards convolutional layers}
 
 
-  \begin{block}{}
-    For illustration purposes, in the following slides images and filters will be displayed as rows of neurons - these can be seen as 1D arrays or as sections of 2D arrays.
-
-  \end{block}
-
-
   \begin{columns}
 
     \begin{column}<1->{0.3\textwidth}
       \begin{center}
         \includegraphics[width=0.74\textwidth]{fully_connected_layer.png}
-        \\ \scriptsize{Fully connected layer: $n(s+1)$ weights}
+        \\ \scriptsize{Fully connected layer: $n(n+1)$ weights}
       \end{center}
     \end{column}
 
@@ -660,7 +690,58 @@
     \begin{column}<3->{0.3\textwidth}
       \begin{center}
         \includegraphics[width=0.74\textwidth]{convolutional_layer.png}
-        \\ \scriptsize{Weight replication: $s+1$ weights}
+        \\ \scriptsize{Weight replication: $s+1$ weights.\\
+          \alert{Convolutional layer.}}
+      \end{center}
+    \end{column}
+
+  \end{columns}
+
+  %% \begin{block}<4->{}
+  %%   A convolutional layer computes a convolution, plus a constant, of the precedent layer.
+  %% \end{block}
+
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Towards convolutional layers: some figures}
+
+  \begin{itemize}
+  \item $3 \times 3$ convolutions: $s=9$
+  \item \textcolor{blue}{Toy image: $n = 28 \times 28 = 784$}
+  \item \textcolor{orange}{Typical image: $n = 1000 \times 1000 = 10^6$}
+  \end{itemize}
+
+  \begin{columns}
+
+    \begin{column}{0.3\textwidth}
+      \begin{center}
+        \includegraphics[width=0.74\textwidth]{fully_connected_layer.png}
+        \\ \scriptsize{Fully connected layer: $n(n+1)$ weights}
+        \\ \textcolor{blue}{\scriptsize{$\approx 6.10^5$}}
+        \\ \textcolor{orange}{\scriptsize{$\approx 10^{12}$}}
+      \end{center}
+    \end{column}
+
+    \begin{column}{0.3\textwidth}
+      \begin{center}
+        \includegraphics[width=0.74\textwidth]{locally_connected_layer.png}
+        \\ \scriptsize{Locally conn. layer: $n(s+1)$ weights}
+        \\ \textcolor{blue}{\scriptsize{$7840$}}
+        \\ \textcolor{orange}{\scriptsize{$10^7$}}
+      \end{center}
+    \end{column}
+
+    \begin{column}{0.3\textwidth}
+      \begin{center}
+        \includegraphics[width=0.74\textwidth]{convolutional_layer.png}
+        \\ \scriptsize{Weight replication: $s+1$ weights.}
+        \\ \textcolor{blue}{\scriptsize{$10$}}
+        \\ \textcolor{orange}{\scriptsize{$10$}}
+
       \end{center}
     \end{column}
 
@@ -704,7 +785,6 @@
     \end{column}
 
   \end{columns}
-
 
 }
 
@@ -808,44 +888,6 @@ Dilated convolutions are used the increase the size of the receptive field of th
 
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{1D representations}
-
-  \centering
-  \includegraphics[width=\textwidth]{fovea_convnet2}
-
-  \vspace{1em}
-  \pause
-
-  \begin{columns}
-    \begin{column}{.5\textwidth}
-      \includegraphics[width=0.8\textwidth]{Fundus_photograph_of_normal_right_eye.jpg}
-    \end{column}
-    \begin{column}{.5\textwidth}
-      This NN was used to estimate the position of the center of the macula on fundus images.
-    \end{column}
-  \end{columns}
-
-  \source{NN is work of Robin Alais et al.\\Fundus image by Mikael Häggström, used with permission (CC0).}
-
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{2D representations}
-
-  \begin{center}
-    \begin{figure}
-      \includegraphics[width=0.75\textwidth]{vgg16.png}
-      \source{VGG16 (From https://www.cs.toronto.edu/~frossard/post/vgg16/)}
-    \end{figure}
-  \end{center}
-
-This network is used for image classification tasks.
-
-\end{frame}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Building convolutional networks}
@@ -905,6 +947,42 @@ This network is used for image classification tasks.
 
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{1D representations}
+
+  \centering
+  \includegraphics[width=\textwidth]{fovea_convnet2}
+
+  \vspace{1em}
+  \pause
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \includegraphics[width=0.8\textwidth]{Fundus_photograph_of_normal_right_eye.jpg}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      This NN was used to estimate the position of the center of the macula on fundus images.
+    \end{column}
+  \end{columns}
+
+  \source{NN is work of Robin Alais et al.\\Fundus image by Mikael Häggström, used with permission (CC0).}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{2D representations}
+
+  \begin{center}
+    \begin{figure}
+      \includegraphics[width=0.75\textwidth]{vgg16.png}
+      \source{VGG16 (From https://www.cs.toronto.edu/~frossard/post/vgg16/)}
+    \end{figure}
+  \end{center}
+
+\end{frame}
+
+
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% \frame{
@@ -960,8 +1038,9 @@ This network is used for image classification tasks.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \frame{
-  \frametitle{GoogLeNet (a.k.a. Inception v1)}
+  \frametitle{GoogLeNet}
 
+  This is an architecture based on Inception v1 principles.
 
   \begin{itemize}
 
@@ -973,14 +1052,48 @@ This network is used for image classification tasks.
 
   \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{googlenet.png}
+    \includegraphics[width=\textwidth]{googlenet2.png}
     \source{From \cite{szegedy_going_2014}}
   \end{figure}
 
-  ResNet won the following year...
-
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{GoogLeNet review}
+
+  \includegraphics[width=\textwidth]{googlenet2_outputs.png}
+
+\begin{itemize}
+\item Two extra output are added
+\item They are added to the final output with a 0.3 weight
+\item They help propagate gradient through the low levels of the network
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{GoogLeNet review}
+
+  \includegraphics[width=\textwidth]{googlenet2_modules.png}
+
+\begin{itemize}
+\item 9 inception modules
+\end{itemize}
+
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Inception module: ``naive version''}
+
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{inception_module_naive.png}
+    \source{From \cite{szegedy_going_2014}}
+  \end{figure}
+
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Inception module}
@@ -991,30 +1104,14 @@ This network is used for image classification tasks.
     \source{From \cite{szegedy_going_2014}}
   \end{figure}
 
+\begin{itemize}
+\item $1 \times 1$ convolutions are used to keep the number of parameters low.
+\end{itemize}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{ResNet}
-
-  \begin{columns}
-    \begin{column}{.5\textwidth}
-      \begin{itemize}
-      \item Winner of the ImageNet Large Scale Visual Recognition Competition (ILSVRC) in 2015.
-      \item The authors tested up to 1202 layers. They reported no training difficulties, but overfitting \cite{he_deep_2015}
-      \end{itemize}
-
-    \end{column}
-
-    \begin{column}{.5\textwidth}
-      \begin{figure}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{resnet_module.png}
-        \\Residual learning block \source{From \cite{he_deep_2015}}
-      \end{figure}
-
-    \end{column}
-  \end{columns}
-
 
   \begin{figure}[ht]
     \centering
@@ -1022,14 +1119,30 @@ This network is used for image classification tasks.
     \\Residual network with 34 layers
   \end{figure}
 
+  \begin{itemize}
+  \item Winner of the ImageNet Large Scale Visual Recognition Competition (ILSVRC) in 2015.
+  \item The authors tested up to 1202 layers. They reported no training difficulties, but overfitting \cite{he_deep_2015}
+  \end{itemize}
 
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Backpropagation through a ResNet module}
+\begin{frame}{ResNet module}
+
+\begin{itemize}
+\item \alert{Skip connection} help backpropagation
+\end{itemize}
+
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{resnet_module.png}
+    \\Residual learning block \source{From \cite{he_deep_2015}}
+  \end{figure}
+
 
 \end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1073,7 +1186,7 @@ This network is used for image classification tasks.
     \begin{itemize}
     \item Most of these libraries are distributed with very permissive licences
     \item Most of them use Python as prototyping language
-    \item \emph{Keras} is a very easy to use interface to Tensorflow, Theano and CNTK.
+    \item \emph{Keras} is a very easy to use interface to Tensorflow.
     \end{itemize}
 
   \end{block}
