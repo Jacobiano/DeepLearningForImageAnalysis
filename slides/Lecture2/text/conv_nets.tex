@@ -446,7 +446,7 @@
 
   Classification problem:
   \begin{itemize}
-  \item Input: image $\x$
+  \item Input: image
   \item Output: class $y \in \{ label_1, label_2, \ldots, label_q\}$
   \end{itemize}
 
@@ -830,10 +830,22 @@ Dilated convolutions are used the increase the size of the receptive field of th
 \frame{
   \frametitle{Several filters in the same convolutional layer}
 
-  \begin{center}
-    \includegraphics[width=0.53\textwidth]{convolutional_layer2.png}
 
+\begin{columns}
+  \begin{column}{.53\textwidth}
+  \begin{center}
+    \includegraphics[width=\textwidth]{convolutional_layer2.png}
   \end{center}
+
+  \end{column}
+
+  \begin{column}{.47\textwidth}
+\begin{block}{Note on vocabulary}
+  The depth of a layer is often called the \alert{number of filters}.
+\end{block}
+  \end{column}
+\end{columns}
+
 
 
 }
@@ -863,7 +875,7 @@ Dilated convolutions are used the increase the size of the receptive field of th
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame{
+\frame<beamer>{
   \frametitle{Consequences on the parameter number}
 
   \begin{center}
@@ -875,6 +887,24 @@ Dilated convolutions are used the increase the size of the receptive field of th
   \item<2-> $d^1 \times (s + 1)$
   \item<3-> In layer 2?
   \item<4-> $d^2 \times (d^1 \times s + 1)$
+  \end{itemize}
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame<handout>{
+  \frametitle{Consequences on the parameter number}
+
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{convolutional_layer4.png}
+  \end{center}
+
+  \begin{itemize}
+  \item How many parameters do we have in layer 1?
+  \item ...
+  \item In layer 2?
+  \item ...
   \end{itemize}
 
 }
@@ -932,6 +962,48 @@ Dilated convolutions are used the increase the size of the receptive field of th
 
 \end{frame}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Branch merging: concatenation}
+
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{concatenation.png}
+  \end{center}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Branch merging: addition}
+
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{addition.png}
+  \end{center}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \begin{frame}{Branch merging}
+
+%% \begin{columns}
+%%   \begin{column}{.5\textwidth}
+%%   \begin{center}
+%%     \includegraphics[width=\textwidth]{concatenation.png}
+%%     \\ Concatenation
+%%   \end{center}
+
+%%   \end{column}
+
+%%   \begin{column}{.5\textwidth}
+%%   \begin{center}
+%%     \includegraphics[width=\textwidth]{addition.png}
+%%     \\ Addition
+%%   \end{center}
+
+%%   \end{column}
+%% \end{columns}
+
+%% \end{frame}
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% \begin{frame}{Skip connections}
