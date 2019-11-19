@@ -481,6 +481,8 @@
     \end{itemize}
   \end{block}
 
+This is called one-hot encoding. The resulting vector is a one-hot vector.
+
 \end{frame}
 
 
@@ -548,7 +550,7 @@
   The preferred loss function for classification is cross-entropy:
 
   \begin{block}{}
-    For $\y$ in $[0, 1]^d$ and $\hat{\y}$ in $]0, 1]^d$:
+    For $\y$ in $\{0, 1\}^d$ and $\hat{\y}$ in $]0, 1[^d$:
         \[
         H(\y, \hat{\y}) = - \sum_{i=1}^d \y_i \log(\hat{\y}_i)
         \]
@@ -556,11 +558,9 @@
 
   \pause
 
-  \begin{alertblock}{}
-    For this to work, each $\hat{\y}_i$ must be strictly positive. Therefore when used in a NN the cross-entropy has to be preceded by a convenient operator, such as a sigmoid or a softmax.
-  \end{alertblock}
+  Note that in most cases $\y$ is a one-hot vector: $\y_i = 1$ for $i=i_0$ and $\y_i=0$ otherwise. Therefore the cross-entropy will ``push'' $\hat{\y_{i_0}}$ towards $1$. For the other elements of $\hat{\y}$ to be pushed towards $0$, $\hat{\y}$ is typically computed by a softmax.
 
-  \pause
+   \pause
 
   Note that the binary cross-entropy we previously saw is a particular case of cross-entropy.
 
@@ -1140,7 +1140,7 @@ Dilated convolutions are used the increase the size of the receptive field of th
   \includegraphics[width=\textwidth]{googlenet2_outputs.png}
 
 \begin{itemize}
-\item Two extra output are added
+\item Two extra outputs are added
 \item They are added to the final output with a 0.3 weight
 \item They help propagate gradient through the low levels of the network
 \end{itemize}
@@ -1207,7 +1207,7 @@ Dilated convolutions are used the increase the size of the receptive field of th
 \begin{frame}{ResNet module}
 
 \begin{itemize}
-\item \alert{Skip connection} help backpropagation
+\item \alert{Skip connections} help backpropagation
 \end{itemize}
 
   \begin{figure}[ht]
