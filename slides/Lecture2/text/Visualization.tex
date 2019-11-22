@@ -441,10 +441,11 @@ The image analysis community has developed many algorithms for eye detection; he
 	\item 1D and 2D plots of the loss can therefore be misleading: the sharpness of a minimum might be due to a large extend to the problem of scale invariance. 
 	\item One idea to cope with scale invariance is to normalize the directions with respect to the filter weights \cite{Li:2018}:
 	\begin{itemize}
-		\item First we draw a random direction $d$. 
-		\item For visualization, we require that the directional values in $d$ corresponding to filter parameters $(r,l)$ have the same norm as the filter values. 
+		\item First we draw a random direction $d$ (same dimension as $\param$). 
+		\item For visualization, we require that the values in $d$ that correspond to filter $j$ in layer $i$ have the same norm as the parameter values $(i,j)$:
+%		directional values in $d$ corresponding to filter parameters $(r,l)$ have the same norm as the filter values. 
 		\begin{equation}
-			d^l_r \leftarrow \frac{d^l_r}{\|d^l_r\|}\param^l_r
+			d^l_r \leftarrow \frac{d_{i,j}}{\|d_{i,j}\|}\|\param_{i,j}\|
 		\end{equation}
 		where $\|\cdot\|$ is the Frobenius norm. 
 	\end{itemize}
