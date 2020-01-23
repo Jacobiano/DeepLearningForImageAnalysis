@@ -680,21 +680,21 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
     \begin{column}<1->{0.3\textwidth}
       \begin{center}
         \includegraphics[width=0.74\textwidth]{fully_connected_layer.png}
-        \\ \scriptsize{Fully connected layer: $n(n+1)$ weights}
+        \\ \scriptsize{Fully connected layer: $n \times n$ weights and $n$ bias: $n(n+1)$ parameters}
       \end{center}
     \end{column}
 
     \begin{column}<2->{0.3\textwidth}
       \begin{center}
         \includegraphics[width=0.74\textwidth]{locally_connected_layer.png}
-        \\ \scriptsize{Locally conn. layer: $n(s+1)$ weights}
+        \\ \scriptsize{Locally conn. layer: $n(s+1)$ parameters}
       \end{center}
     \end{column}
 
     \begin{column}<3->{0.3\textwidth}
       \begin{center}
         \includegraphics[width=0.74\textwidth]{convolutional_layer.png}
-        \\ \scriptsize{Weight replication: $s+1$ weights.\\
+        \\ \scriptsize{Weight replication: $s+1$ parameters.\\
           \alert{Convolutional layer.}}
       \end{center}
     \end{column}
@@ -724,7 +724,7 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
     \begin{column}{0.3\textwidth}
       \begin{center}
         \includegraphics[width=0.74\textwidth]{fully_connected_layer.png}
-        \\ \scriptsize{Fully connected layer: $n(n+1)$ weights}
+        \\ \scriptsize{Fully connected layer: $n(n+1)$ parameters}
         \\ \textcolor{blue}{\scriptsize{$\approx 6.10^5$}}
         \\ \textcolor{orange}{\scriptsize{$\approx 10^{12}$}}
       \end{center}
@@ -733,7 +733,7 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
     \begin{column}{0.3\textwidth}
       \begin{center}
         \includegraphics[width=0.74\textwidth]{locally_connected_layer.png}
-        \\ \scriptsize{Locally conn. layer: $n(s+1)$ weights}
+        \\ \scriptsize{Locally conn. layer: $n(s+1)$ parameters}
         \\ \textcolor{blue}{\scriptsize{$7840$}}
         \\ \textcolor{orange}{\scriptsize{$10^7$}}
       \end{center}
@@ -742,7 +742,7 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
     \begin{column}{0.3\textwidth}
       \begin{center}
         \includegraphics[width=0.74\textwidth]{convolutional_layer.png}
-        \\ \scriptsize{Weight replication: $s+1$ weights.}
+        \\ \scriptsize{Weight replication: $s+1$ parameters.}
         \\ \textcolor{blue}{\scriptsize{$10$}}
         \\ \textcolor{orange}{\scriptsize{$10$}}
 
