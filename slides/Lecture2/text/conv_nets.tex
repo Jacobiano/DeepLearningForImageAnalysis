@@ -922,6 +922,49 @@ Dilated convolutions are used the increase the size of the receptive field of th
 
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Depth-wise convolution}
+
+  \begin{center}
+    \includegraphics[height=0.66\textheight]{conv_depth_wise.png}
+  \end{center}
+
+  \begin{itemize}
+  \item The previous layer must contain the same number of filters
+    \item The number of parameters is drastically reduced
+    \item These layers are interesting when combined with $1 \times 1$ convolutions...
+\end{itemize}
+
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Dimension reduction}
+
+  $1 \times 1$ convolutions are used to reduce the number of filters - this is called by some authors \emph{dimension reduction}.
+
+  \begin{center}
+    \includegraphics[height=0.66\textheight]{conv1x1.png}
+  \end{center}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Decomposed convolution}
+
+The combination of depth-wise with $1 \times 1$ convolutions gives decomposed convolutions.
+
+  \begin{center}
+    \includegraphics[height=0.66\textheight]{conv_dec.png}
+  \end{center}
+
+They are somehow a factorization of classical convolutions. Thus they allow reducing the number of parameters.
+
+\end{frame}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Building convolutional networks}
@@ -946,21 +989,7 @@ Dilated convolutions are used the increase the size of the receptive field of th
 
   Note however a current trend that consists in using convolutional layers with a stride of 2
 
-
-
 }
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Dimension reduction}
-
-  $1 \times 1$ convolutions are used to reduce the number of filters - this is called by some authors \emph{dimension reduction}.
-
-  \begin{center}
-    \includegraphics[height=0.5\textheight]{conv1x1.png}
-  \end{center}
-
-\end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
