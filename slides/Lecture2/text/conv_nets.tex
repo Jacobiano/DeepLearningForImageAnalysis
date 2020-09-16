@@ -404,10 +404,9 @@
 
 
   \begin{figure}
-    \includegraphics[height=5cm]{network}
+    \includegraphics[height=5cm]{mini_reseau3_bis}
   \end{figure}
 
-  {\small(from http://www.jtoy.net)}
 
 }
 
@@ -425,13 +424,15 @@
 
     \begin{column}<1->{0.45\textwidth}
       \begin{center}
-        \includegraphics[width=0.50\textwidth]{image_as_pixels.png}
+        \includegraphics<1-2>[width=0.9\textwidth]{cnn_pixels.png}
+        \includegraphics<3>[width=0.9\textwidth]{imagette.png}
       \end{center}
     \end{column}
 
     \begin{column}<2->{0.45\textwidth}
       \begin{center}
-        \includegraphics[width=0.50\textwidth]{image_as_neurons.png}
+        \includegraphics<2>[width=0.9\textwidth]{cnn_neurones.png}
+        \includegraphics<3->[width=0.9\textwidth]{imagette_neurones.png}
 
       \end{center}
     \end{column}
@@ -582,7 +583,7 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 
   \begin{block}{Example: image of size $4 \times 2$, $4$ possible classes}
     \centering
-      \includegraphics[width=0.6\textwidth]{network}
+      \includegraphics[width=0.6\textwidth]{mini_reseau3_bis}
   \end{block}
 
 \end{frame}
@@ -592,7 +593,7 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 \begin{frame}{Image classification using a fully-connected NN}
 
     \centering
-      \includegraphics[width=0.6\textwidth]{network}
+      \includegraphics[width=0.6\textwidth]{mini_reseau3_bis}
 
       \begin{itemize}[<+->]
       \item A small image contains at least $100\,000$ pixels
@@ -637,29 +638,29 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 \begin{frame}{Layers representation}
 
     \begin{block}{}
-      For illustration purposes, in the following slides images and filters will be displayed as rows of neurons - these can be seen as 1D arrays or as sections of 2D arrays.
+      For illustration purposes, in the following slides images and filters will be displayed as rows of neurons -- these can be seen as 1D arrays or as sections of 2D arrays.
 
-      We represent connections between neurons. Each such connection is associated to a weight. The bias are not represented, to avoid clutter, but must not be forgotten.
+      We represent some connections between neurons. Each such connection is associated to a weight. The bias are not represented, to avoid clutter, but must not be forgotten.
   \end{block}
 
   \begin{columns}
 
     \begin{column}<1->{0.33\textwidth}
       \begin{center}
-        \includegraphics[width=0.60\textwidth]{image_as_pixels.png}
+        \includegraphics[width=0.80\textwidth]{cnn_pixels.png}
       \end{center}
     \end{column}
 
     \begin{column}<2->{0.33\textwidth}
       \begin{center}
-        \includegraphics[width=0.60\textwidth]{image_as_neurons.png}
+        \includegraphics[width=0.80\textwidth]{cnn_neurones.png}
 
       \end{center}
     \end{column}
 
     \begin{column}<3->{0.33\textwidth}
       \begin{center}
-        \includegraphics[width=0.15\textwidth]{image_as_neurons_col.png}
+        \includegraphics[width=0.07\textwidth]{col.png}
 
       \end{center}
     \end{column}
@@ -757,6 +758,22 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 
 
 }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Convolutional layer illustration in 2D}
+
+
+  \begin{itemize}
+  \item Illustration of a convolution of size $3 \times 3$
+  \end{itemize}
+
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{cnn_complet}
+   \end{center}
+
+
+\end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
