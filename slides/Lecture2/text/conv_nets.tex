@@ -172,9 +172,9 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{ImageNet project}
+\begin{frame}{ImageNet project \tiny{\cite{russakovsky_imagenet_2015}}}
 
-  Since 2010, ImageNet organizes and annual challenge: The ImageNet Large Scale Visual Recognition Challenge (ILSVRC), that constitutes a breakthrough in the design of image analysis challenges by its size.
+  Since 2010, ImageNet organizes and annual challenge: The ImageNet Large Scale Visual Recognition Challenge (ILSVRC), that constituted a breakthrough in the design of image analysis challenges by its size.
 
   \begin{block}{Image classification task (since 2012)}
     \begin{itemize}
@@ -190,25 +190,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{ImageNet projet}
 
-  \begin{columns}
-    \begin{column}{.5\textwidth}
       \centering
-      \includegraphics[width=0.31\textwidth]{ilsvrc_guitar2}\hspace{0.1em}
-      \includegraphics[width=0.31\textwidth]{ilsvrc_guitar3}\\
-      \includegraphics[width=0.52\textwidth]{ilsvrc_guitar1}\\
-      \includegraphics[width=0.52\textwidth]{ilsvrc_guitar4}\\
+      \includegraphics[width=0.20\textwidth]{ilsvrc_guitar2}\hspace{0.1em}
+      \includegraphics[width=0.20\textwidth]{ilsvrc_guitar3}\\
+      \includegraphics[width=0.39\textwidth]{ilsvrc_guitar1}\hspace{0.1em}
+      \includegraphics[width=0.39\textwidth]{ilsvrc_guitar4}\\
       Examples from the \emph{acoustic guitar} class
 
-    \end{column}
-
-    \begin{column}{.5\textwidth}
-      \centering
-      \includegraphics[height=0.75\textheight]{ImageNet_error_history}
-
-      \source{Wikipedia (CC BY-SA 4.0)}
-
-    \end{column}
-  \end{columns}
 
 \end{frame}
 
@@ -292,8 +280,9 @@
   \end{block}
 
   \begin{itemize}
-  \item[+] Good (impressive!) results
-  \item[-] A large amount of annotated data is required
+  \item[$\oplus$] Good (impressive!) results
+  \item[$\ominus$] A large amount of annotated data is required
+  \item[$\ominus$] Extensive computing resources needed
   \end{itemize}
 
 \end{frame}
@@ -303,11 +292,23 @@
 \frame{
   \frametitle{Some accomplishments}
 
+
+
+\begin{columns}
+  \begin{column}{.5\textwidth}
   \begin{block}{ImageNet Large Scale Visual Recognition Challenge (ILSVRC)}
     2012: \emph{AlexNet} \cite{krizhevsky_imagenet_2012} won this challenge by a large margin
   \end{block}
 
-  The database contains more that 1 million training images, belonging to 1000 different classes.
+  \end{column}
+
+  \begin{column}{.5\textwidth}
+      \includegraphics[height=0.75\textheight]{ImageNet_error_history}
+
+      \source{Wikipedia (CC BY-SA 4.0)}
+
+  \end{column}
+\end{columns}
 
 
 }
@@ -343,7 +344,7 @@
   \item motion estimation
   \item style transfer
   \item anomalous image detection
-  \item image generation
+  \item image generation with generative adversarial networks (GANs)
   \end{itemize}
 
 
@@ -482,7 +483,7 @@
     \end{itemize}
   \end{block}
 
-This is called one-hot encoding. The resulting vector is a one-hot vector.
+This is called \alert{one-hot encoding}. The resulting vector is a one-hot vector.
 
 \end{frame}
 
@@ -569,7 +570,7 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Image classification a fully-connected NN}
+\begin{frame}{Image classification with a fully-connected NN}
 
   \begin{block}{Input}
     The input image, containing $p$ pixels, is transformed into a vector of length $p$.
@@ -1138,6 +1139,12 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 %% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Some classical architectures}
+\label{sec:architectures}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \frame{
   \frametitle{VGGnet}
@@ -1273,26 +1280,25 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frame{
-  \frametitle{Current trends}
+%% \frame{
+%%   \frametitle{Current trends}
 
-  \begin{itemize}
-  \item Small convolutions ($3\times3$)
-  \item Dimension reduction using $1 \times 1$ convolutions
-  \item Increasing number of layers
-  \item Skip connections
-  \end{itemize}
+%%   \begin{itemize}
+%%   \item Small convolutions ($3\times3$)
+%%   \item Dimension reduction using $1 \times 1$ convolutions
+%%   \item Increasing number of layers
+%%   \item Skip connections
+%%   \end{itemize}
 
-  \begin{block}{}
-    VGG, GoogLeNet and ResNet (and their variants) are still among the most used architectures for image classification and other related tasks.
-  \end{block}
+%%   \begin{block}{}
+%%     VGG, GoogLeNet and ResNet (and their variants) are still among the most used architectures for image classification and other related tasks.
+%%   \end{block}
 
-}
-
-
-
+%% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1307,24 +1313,17 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
   \item Caffe (Univ. of California, Berkeley - BSD licence)
   \item Microsoft Cognitive Toolkit (MIT licence)
   \item MatConvNet (for MatLab users)
-  \item Theano (Montreal Institute for Learning Algorithms; not maintained anymore)
   \end{itemize}
 
   \begin{block}{Comments}
     \begin{itemize}
     \item Most of these libraries are distributed with very permissive licences
     \item Most of them use Python as prototyping language
-    \item \emph{Keras} is a very easy to use interface to Tensorflow.
+    \item \alert{Keras} is a very easy to use interface to Tensorflow.
     \end{itemize}
 
   \end{block}
-
-
 }
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{A revolution in image analysis}
@@ -1333,6 +1332,7 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
   \item Deep learning has brought an undeniable break-through in image analysis (as in other fields)
   \item A significant part of research efforts in image analysis today is based on deep learning
   \item Its applications are ubiquitous
+  \item Not only we can improve on existing tasks, but we can also treat some problems in a completely different way (for example, image generation).
   \end{itemize}
 
 \end{frame}
@@ -1347,7 +1347,7 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
   \item Enough annotated data
   \item A lot of fiddling (different architectures; hyper-parameters; optimization)
-  \item One (or, even better, several) powerful GPUs
+  \item Expensive, energy hungry, computing resources
 
   \end{itemize}
 
@@ -1361,7 +1361,6 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
 \frame{
   \frametitle{ConvNets can be fooled}
-
 
   Deep learning can produce astonishing results \cite{nguyen_deep_2015}...
   \begin{figure}
