@@ -118,6 +118,117 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Image analysis applications}
+
+  \begin{itemize}
+  \item classification
+  \item quantification
+  \item object localization
+  \item segmentation
+  \item transformation (filtering, in-painting, editing, colorization…)
+  \item image caption generation
+  \item 2D to 3D (stereo matching, 3D reconstruction, …)
+  \item motion estimation
+  \item style transfer
+  \item compression
+  \item anomalous image detection
+  \item image generation with generative adversarial networks (GANs)
+  \end{itemize}
+
+
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Image processing approach}
+
+\begin{columns}
+  \begin{column}{.5\textwidth}
+  \begin{block}{}
+    \begin{itemize}
+    \item Build a geometrical model for the objects of interest
+    \item Implement this model using image processing operators
+    \end{itemize}
+  \end{block}
+
+  \pause
+
+  \end{column}
+  \begin{column}{.5\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{zhang_MA}\\
+  \scriptsize{Detail of eye fundus image with microaneurysms to be detected}
+  \source{\cite{zhang_application_2011}}
+
+  \end{column}
+\end{columns}
+
+\pause
+
+  \begin{itemize}
+  \item[$\oplus$] This approach works correctly when the objects are not too complex.
+  \item[$\ominus$] If objects are difficult to model, machine learning methods can bring a solution.
+  \end{itemize}
+
+
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Classical machine learning approach}
+
+\begin{columns}
+  \begin{column}{.35\textwidth}
+  \begin{block}{}
+    \begin{itemize}
+    \item Compute features from the image
+    \item Apply machine learning to those features
+    \end{itemize}
+  \end{block}
+
+  \end{column}
+\pause
+\begin{column}{.65\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{zhang_EX}\\
+  \scriptsize{Exudates segmentation: original image, ground-truth and candidates with associated probabilities obtained with machine learning }
+    \source{\cite{zhang_exudate_2014}}
+  \end{column}
+\end{columns}
+\vspace{1em}
+\pause
+  \begin{itemize}
+  \item[$\oplus$] Works well with the right features
+  \item[$\ominus$] An expert is required to define those features - and this can be a long process
+  \item[$\ominus$] Annotated data is required
+  \end{itemize}
+
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Deep learning approach}
+
+  \begin{block}{}
+    \begin{itemize}
+    \item Directly take as input the image pixels
+    \item The network is supposed to build its own features
+    \end{itemize}
+  \end{block}
+
+  \begin{itemize}
+  \item[$\oplus$] Good (impressive!) results
+  \item[$\ominus$] A large amount of annotated data is required
+  \item[$\ominus$] Extensive computing resources needed
+  \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{The role of annotated image databases}
 
   Image databases including \emph{annotations} (typically some kind of high level information) are essential to the development of \emph{supervised} machine learning methods for image analysis.
@@ -200,99 +311,9 @@
 
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Image processing approach}
-
-\begin{columns}
-  \begin{column}{.5\textwidth}
-  \begin{block}{}
-    \begin{itemize}
-    \item Build a geometrical model for the objects of interest
-    \item Implement this model using image processing operators
-    \end{itemize}
-  \end{block}
-
-  \pause
-
-  \end{column}
-  \begin{column}{.5\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{zhang_MA}\\
-  \scriptsize{Detail of eye fundus image with microaneurysms to be detected}
-  \source{\cite{zhang_application_2011}}
-
-  \end{column}
-\end{columns}
-
-\pause
-
-  \begin{itemize}
-  \item[+] This approach works correctly when the objects are not too complex.
-  \item[-] If objects are difficult to model, machine learning methods can bring a solution.
-  \end{itemize}
-
-
-\end{frame}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame{
-  \frametitle{Classical machine learning approach}
-
-\begin{columns}
-  \begin{column}{.35\textwidth}
-  \begin{block}{}
-    \begin{itemize}
-    \item Compute features from the image
-    \item Apply machine learning to those features
-    \end{itemize}
-  \end{block}
-
-  \end{column}
-\pause
-\begin{column}{.65\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{zhang_EX}\\
-  \scriptsize{Exudates segmentation: original image, ground-truth and candidates with associated probabilities obtained with machine learning }
-    \source{\cite{zhang_exudate_2014}}
-  \end{column}
-\end{columns}
-\vspace{1em}
-\pause
-  \begin{itemize}
-  \item[+] Works well with the right features
-  \item[-] An expert is required to define those features - and this can be a long process
-  \item[-] Annotated data is required
-  \end{itemize}
-
-
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Deep learning approach}
-
-  \begin{block}{}
-    \begin{itemize}
-    \item Directly take as input the image pixels
-    \item The network is supposed to build its own features
-    \end{itemize}
-  \end{block}
-
-  \begin{itemize}
-  \item[$\oplus$] Good (impressive!) results
-  \item[$\ominus$] A large amount of annotated data is required
-  \item[$\ominus$] Extensive computing resources needed
-  \end{itemize}
-
-\end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \frame{
-  \frametitle{Some accomplishments}
-
-
+  \frametitle{Deep learning achievements}
 
 \begin{columns}
   \begin{column}{.5\textwidth}
@@ -310,50 +331,43 @@
   \end{column}
 \end{columns}
 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frame{
+  \frametitle{Deep learning achievements (cont.)}
+
+  \begin{itemize}
+  \item 2011: first super-human performance, IJCNN 2011 traffic sign recognition contest \cite{stallkamp_german_2011, ciresan_committee_2011}
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=0.7\textwidth]{ijcnn2011.png}
+    \end{figure}
+
+  \item 2012: visual object detection (Mitosis detection in breast cancer histology \cite{ciresan_mitosis_2013})
+  \item 2012: segmentation competition (neuronal membranes in electron microscopy images \cite{ciresan_deep_2012})
+  \end{itemize}
 
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\frame{
-  \frametitle{Some accomplishments (cont.)}
+\begin{frame}{Deep learning achievements (cont.)}
 
   \begin{itemize}
-  \item 2011: first super-human performance, IJCNN 2011 traffic sign recognition contest \cite{ciresan_committee_2011}
-  \item 2012: visual object detection (Mitosis detection in breast cancer histology \cite{ciresan_mitosis_2013})
-  \item 2012: segmentation competition (neuronal membranes in electron microscopy images \cite{ciresan_deep_2012})
   \item 2016: AlphaGo beats Lee Sedol, one of the best go players, in a 5-game match
   \end{itemize}
 
-}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Deep learning image applications}
-
-  \begin{itemize}
-  \item classification
-  \item object localization
-  \item semantic segmentation
-  \item instance segmentation
-  \item transformation (filtering, in-painting, editing, colorization…)
-  \item quantification
-  \item compression
-  \item image caption generation
-  \item 2D to 3D (stereo matching, 3D reconstruction, …)
-  \item motion estimation
-  \item style transfer
-  \item anomalous image detection
-  \item image generation with generative adversarial networks (GANs)
-  \end{itemize}
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{alphago_leesedol_game3.png}
+    \source{Wikipedia (CC BY-SA 4.0)}
+  \end{figure}
 
 
 \end{frame}
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
   \frametitle{Convolutional neural networks in deep learning}
 
@@ -1275,6 +1289,21 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
     \\Residual learning block \source{From \cite{he_deep_2015}}
   \end{figure}
 
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{DenseNet}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Xception}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{MobileNet}
 
 \end{frame}
 
