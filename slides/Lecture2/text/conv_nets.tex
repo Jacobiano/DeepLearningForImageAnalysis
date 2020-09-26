@@ -58,6 +58,18 @@
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Correction TP 1}
+
+  \begin{itemize}
+  \item Optimiser le réseau pour les bases Moons et Circles
+  \item Codage de l'entropie croisée et de sa dérivée. \alert{Attention à la dernière activation!}
+  \item Comparaison: besoin d'une base de \alert{test}. Quantification.
+  \end{itemize}
+
+\end{frame}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -354,15 +366,23 @@
 
 \begin{frame}{Deep learning achievements (cont.)}
 
+\begin{columns}
+  \begin{column}{.4\textwidth}
   \begin{itemize}
   \item 2016: AlphaGo beats Lee Sedol, one of the best go players, in a 5-game match
   \end{itemize}
+  \end{column}
+
+  \begin{column}{.6\textwidth}
 
   \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\textwidth]{alphago_leesedol_game3.png}
-    \source{Wikipedia (CC BY-SA 4.0)}
+    \includegraphics[width=\textwidth]{nature_go.jpg}
   \end{figure}
+  \end{column}
+\end{columns}
+
+
 
 
 \end{frame}
@@ -602,6 +622,12 @@ This is called \alert{one-hot encoding}. The resulting vector is a one-hot vecto
   \end{block}
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Flatten}
+
+\end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1022,11 +1048,6 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
   Note however a current trend that consists in using convolutional layers with a stride of 2
 
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Flatten}
-
-\end{frame}
 
 
 
