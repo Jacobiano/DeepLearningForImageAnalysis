@@ -119,15 +119,28 @@
       \item At what time of the day was the photograph taken?
       \end{itemize}
       \pause
-  \begin{alertblock}{}
-    Designing computer vision systems that are able to extract semantic information from an image is a difficult task.
-  \end{alertblock}
+      \begin{alertblock}{}
+        Designing computer vision systems that are able to extract semantic information from an image is a difficult task.
+      \end{alertblock}
 
     \end{column}
 
   \end{columns}
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Image analysis applications}
+
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.76\textwidth]{applis_dl_sup}
+    \includegraphics[width=0.33\textwidth]{applis_dl_nonsup}
+  \end{figure}
+
+
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Image analysis applications}
@@ -144,7 +157,8 @@
   \item style transfer
   \item compression
   \item anomalous image detection
-  \item image generation with generative adversarial networks (GANs)
+  \item image generation
+  \item etc.
   \end{itemize}
 
 
@@ -156,28 +170,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Image processing approach}
 
-\begin{columns}
-  \begin{column}{.5\textwidth}
-  \begin{block}{}
-    \begin{itemize}
-    \item Build a geometrical model for the objects of interest
-    \item Implement this model using image processing operators
-    \end{itemize}
-  \end{block}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{block}{}
+        \begin{itemize}
+        \item Build a geometrical model for the objects of interest
+        \item Implement this model using image processing operators
+        \end{itemize}
+      \end{block}
+
+      \pause
+
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{zhang_MA}\\
+      \scriptsize{Detail of eye fundus image with microaneurysms to be detected}
+      \source{\cite{zhang_application_2011}}
+
+    \end{column}
+  \end{columns}
 
   \pause
-
-  \end{column}
-  \begin{column}{.5\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{zhang_MA}\\
-  \scriptsize{Detail of eye fundus image with microaneurysms to be detected}
-  \source{\cite{zhang_application_2011}}
-
-  \end{column}
-\end{columns}
-
-\pause
 
   \begin{itemize}
   \item[$\oplus$] This approach works correctly when the objects are not too complex.
@@ -193,26 +207,26 @@
 \frame{
   \frametitle{Classical machine learning approach}
 
-\begin{columns}
-  \begin{column}{.35\textwidth}
-  \begin{block}{}
-    \begin{itemize}
-    \item Compute features from the image
-    \item Apply machine learning to those features
-    \end{itemize}
-  \end{block}
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \begin{block}{}
+        \begin{itemize}
+        \item Compute features from the image
+        \item Apply machine learning to those features
+        \end{itemize}
+      \end{block}
 
-  \end{column}
-\pause
-\begin{column}{.65\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{zhang_EX}\\
-  \scriptsize{Exudates segmentation: original image, ground-truth and candidates with associated probabilities obtained with machine learning }
-    \source{\cite{zhang_exudate_2014}}
-  \end{column}
-\end{columns}
-\vspace{1em}
-\pause
+    \end{column}
+    \pause
+    \begin{column}{.65\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{zhang_EX}\\
+      \scriptsize{Exudates segmentation: original image, ground-truth and candidates with associated probabilities obtained with machine learning }
+      \source{\cite{zhang_exudate_2014}}
+    \end{column}
+  \end{columns}
+  \vspace{1em}
+  \pause
   \begin{itemize}
   \item[$\oplus$] Works well with the right features
   \item[$\ominus$] An expert is required to define those features - and this can be a long process
@@ -313,12 +327,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{ImageNet projet}
 
-      \centering
-      \includegraphics[width=0.20\textwidth]{ilsvrc_guitar2}\hspace{0.1em}
-      \includegraphics[width=0.20\textwidth]{ilsvrc_guitar3}\\
-      \includegraphics[width=0.39\textwidth]{ilsvrc_guitar1}\hspace{0.1em}
-      \includegraphics[width=0.39\textwidth]{ilsvrc_guitar4}\\
-      Examples from the \emph{acoustic guitar} class
+  \centering
+  \includegraphics[width=0.20\textwidth]{ilsvrc_guitar2}\hspace{0.1em}
+  \includegraphics[width=0.20\textwidth]{ilsvrc_guitar3}\\
+  \includegraphics[width=0.39\textwidth]{ilsvrc_guitar1}\hspace{0.1em}
+  \includegraphics[width=0.39\textwidth]{ilsvrc_guitar4}\\
+  Examples from the \emph{acoustic guitar} class
 
 
 \end{frame}
@@ -327,21 +341,21 @@
 \frame{
   \frametitle{Deep learning achievements}
 
-\begin{columns}
-  \begin{column}{.5\textwidth}
-  \begin{block}{ImageNet Large Scale Visual Recognition Challenge (ILSVRC)}
-    2012: \emph{AlexNet} \cite{krizhevsky_imagenet_2012} won this challenge by a large margin
-  \end{block}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{block}{ImageNet Large Scale Visual Recognition Challenge (ILSVRC)}
+        2012: \emph{AlexNet} \cite{krizhevsky_imagenet_2012} won this challenge by a large margin
+      \end{block}
 
-  \end{column}
+    \end{column}
 
-  \begin{column}{.5\textwidth}
+    \begin{column}{.5\textwidth}
       \includegraphics[height=0.75\textheight]{ImageNet_error_history}
 
       \source{Wikipedia (CC BY-SA 4.0)}
 
-  \end{column}
-\end{columns}
+    \end{column}
+  \end{columns}
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -350,10 +364,11 @@
   \frametitle{Deep learning achievements (cont.)}
 
   \begin{itemize}
-  \item 2011: first super-human performance, IJCNN 2011 traffic sign recognition contest \cite{stallkamp_german_2011, ciresan_committee_2011}
+  \item 2011: first super-human performance, IJCNN 2011 traffic sign recognition contest \cite{ciresan_committee_2011}
     \begin{figure}[ht]
       \centering
       \includegraphics[width=0.7\textwidth]{ijcnn2011.png}
+      \source{\cite{stallkamp_german_2011}}
     \end{figure}
 
   \item 2012: visual object detection (Mitosis detection in breast cancer histology \cite{ciresan_mitosis_2013})
@@ -366,21 +381,21 @@
 
 \begin{frame}{Deep learning achievements (cont.)}
 
-\begin{columns}
-  \begin{column}{.4\textwidth}
-  \begin{itemize}
-  \item 2016: AlphaGo beats Lee Sedol, one of the best go players, in a 5-game match
-  \end{itemize}
-  \end{column}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{itemize}
+      \item 2016: AlphaGo beats Lee Sedol, one of the best go players, in a 5-game match
+      \end{itemize}
+    \end{column}
 
-  \begin{column}{.6\textwidth}
+    \begin{column}{.6\textwidth}
 
-  \begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{nature_go.jpg}
-  \end{figure}
-  \end{column}
-\end{columns}
+      \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\textwidth]{nature_go.jpg}
+      \end{figure}
+    \end{column}
+  \end{columns}
 
 
 
@@ -460,7 +475,7 @@
     \begin{column}<1->{0.45\textwidth}
       \begin{center}
         \includegraphics<1-2>[width=0.9\textwidth]{cnn_pixels.png}
-        \includegraphics<3>[width=0.9\textwidth]{imagette.png}
+        \includegraphics<3->[width=0.9\textwidth]{imagette.png}
       \end{center}
     \end{column}
 
@@ -473,6 +488,12 @@
     \end{column}
 
   \end{columns}
+
+  \pause
+
+  \begin{alertblock}<4->{Image preprocessing}
+    Often, the input image is modified to simplify the optimization of the model.
+  \end{alertblock}
 
 }
 
@@ -517,7 +538,7 @@
     \end{itemize}
   \end{block}
 
-This is called \alert{one-hot encoding}. The resulting vector is a one-hot vector.
+  This is called \alert{one-hot encoding}. The resulting vector is a one-hot vector.
 
 \end{frame}
 
@@ -596,7 +617,7 @@ This is called \alert{one-hot encoding}. The resulting vector is a one-hot vecto
 
   Note that in most cases $\y$ is a one-hot vector: $\y_i = 1$ for $i=i_0$ and $\y_i=0$ otherwise. Therefore the cross-entropy will ``push'' $\hat{\y_{i_0}}$ towards $1$. For the other elements of $\hat{\y}$ to be pushed towards $0$, $\hat{\y}$ is typically computed by a softmax.
 
-   \pause
+  \pause
 
   Note that the binary cross-entropy we previously saw is a particular case of cross-entropy.
 
@@ -614,11 +635,11 @@ This is called \alert{one-hot encoding}. The resulting vector is a one-hot vecto
     For $q$ classes, the output will be a vector of length $q$.
   \end{block}
 
-\pause
+  \pause
 
   \begin{block}{Example: image of size $4 \times 2$, $4$ possible classes}
     \centering
-      \includegraphics[width=0.6\textwidth]{mini_reseau3_bis}
+    \includegraphics[width=0.6\textwidth]{mini_reseau3_bis}
   \end{block}
 
 \end{frame}
@@ -633,15 +654,15 @@ This is called \alert{one-hot encoding}. The resulting vector is a one-hot vecto
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Image classification using a fully-connected NN}
 
-    \centering
-      \includegraphics[width=0.6\textwidth]{mini_reseau3_bis}
+  \centering
+  \includegraphics[width=0.6\textwidth]{mini_reseau3_bis}
 
-      \begin{itemize}[<+->]
-      \item A small image contains at least $100\,000$ pixels
-      \item The number of parameters between two layers of that size is $10^5 \times (10^5 + 1)$!
-      \item This approach is not feasible...
-      \item Moreover, this approach does not take into account the local structure of images.
-      \end{itemize}
+  \begin{itemize}[<+->]
+  \item A small image contains at least $100\,000$ pixels
+  \item The number of parameters between two layers of that size is $10^5 \times (10^5 + 1)$!
+  \item This approach is not feasible...
+  \item Moreover, this approach does not take into account the local structure of images.
+  \end{itemize}
 
 \end{frame}
 
@@ -678,10 +699,10 @@ This is called \alert{one-hot encoding}. The resulting vector is a one-hot vecto
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Layers representation}
 
-    \begin{block}{}
-      For illustration purposes, in the following slides images and filters will be displayed as rows of neurons -- these can be seen as 1D arrays or as sections of 2D arrays.
+  \begin{block}{}
+    For illustration purposes, in the following slides images and filters will be displayed as rows of neurons -- these can be seen as 1D arrays or as sections of 2D arrays.
 
-      We represent some connections between neurons. Each such connection is associated to a weight. The bias are not represented, to avoid clutter, but must not be forgotten.
+    We represent some connections between neurons. Each such connection is associated to a weight. The bias are not represented, to avoid clutter, but must not be forgotten.
   \end{block}
 
   \begin{columns}
@@ -811,7 +832,7 @@ This is called \alert{one-hot encoding}. The resulting vector is a one-hot vecto
 
   \begin{center}
     \includegraphics[width=0.5\textwidth]{cnn_complet}
-   \end{center}
+  \end{center}
 
 
 \end{frame}
@@ -853,7 +874,7 @@ This is called \alert{one-hot encoding}. The resulting vector is a one-hot vecto
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Dilated convolutions}
 
-Dilated convolutions are used the increase the size of the receptive field of the network.
+  Dilated convolutions are used the increase the size of the receptive field of the network.
 
   \begin{columns}
 
@@ -889,20 +910,20 @@ Dilated convolutions are used the increase the size of the receptive field of th
   \frametitle{Several filters in the same convolutional layer}
 
 
-\begin{columns}
-  \begin{column}{.53\textwidth}
-  \begin{center}
-    \includegraphics[width=\textwidth]{convolutional_layer2.png}
-  \end{center}
+  \begin{columns}
+    \begin{column}{.53\textwidth}
+      \begin{center}
+        \includegraphics[width=\textwidth]{convolutional_layer2.png}
+      \end{center}
 
-  \end{column}
+    \end{column}
 
-  \begin{column}{.47\textwidth}
-\begin{block}{Note on vocabulary}
-  The depth of a layer is often called the \alert{number of filters}.
-\end{block}
-  \end{column}
-\end{columns}
+    \begin{column}{.47\textwidth}
+      \begin{block}{Note on vocabulary}
+        The depth of a layer is often called the \alert{number of filters}.
+      \end{block}
+    \end{column}
+  \end{columns}
 
 
 
@@ -989,9 +1010,9 @@ Dilated convolutions are used the increase the size of the receptive field of th
 
   \begin{itemize}
   \item The previous layer must contain the same number of filters
-    \item The number of parameters is drastically reduced
-    \item These layers are interesting when combined with $1 \times 1$ convolutions...
-\end{itemize}
+  \item The number of parameters is drastically reduced
+  \item These layers are interesting when combined with $1 \times 1$ convolutions...
+  \end{itemize}
 
 
 \end{frame}
@@ -1011,13 +1032,13 @@ Dilated convolutions are used the increase the size of the receptive field of th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Decomposed convolution}
 
-The combination of depth-wise with $1 \times 1$ convolutions gives decomposed convolutions.
+  The combination of depth-wise with $1 \times 1$ convolutions gives decomposed convolutions.
 
   \begin{center}
     \includegraphics[height=0.66\textheight]{conv_dec.png}
   \end{center}
 
-They are somehow a factorization of classical convolutions. Thus they allow reducing the number of parameters.
+  They are somehow a factorization of classical convolutions. Thus they allow reducing the number of parameters.
 
 \end{frame}
 
@@ -1233,11 +1254,11 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
   \includegraphics[width=\textwidth]{googlenet2_outputs.png}
 
-\begin{itemize}
-\item Two extra outputs are added
-\item They are added to the final output with a 0.3 weight
-\item They help propagate gradient through the low levels of the network
-\end{itemize}
+  \begin{itemize}
+  \item Two extra outputs are added
+  \item They are added to the final output with a 0.3 weight
+  \item They help propagate gradient through the low levels of the network
+  \end{itemize}
 
 \end{frame}
 
@@ -1246,9 +1267,9 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
   \includegraphics[width=\textwidth]{googlenet2_modules.png}
 
-\begin{itemize}
-\item 9 inception modules
-\end{itemize}
+  \begin{itemize}
+  \item 9 inception modules
+  \end{itemize}
 
 \end{frame}
 
@@ -1274,9 +1295,9 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
     \source{From \cite{szegedy_going_2014}}
   \end{figure}
 
-\begin{itemize}
-\item $1 \times 1$ convolutions are used to keep the number of parameters low.
-\end{itemize}
+  \begin{itemize}
+  \item $1 \times 1$ convolutions are used to keep the number of parameters low.
+  \end{itemize}
 
 \end{frame}
 
@@ -1300,9 +1321,9 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{ResNet module}
 
-\begin{itemize}
-\item \alert{Skip connections} help backpropagation
-\end{itemize}
+  \begin{itemize}
+  \item \alert{Skip connections} help backpropagation
+  \end{itemize}
 
   \begin{figure}[ht]
     \centering
@@ -1314,17 +1335,57 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{DenseNet}
+\begin{frame}{DenseNet\cite{huang_densely_2018}}
+
+
+  \begin{block}{Architecture}
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=\textwidth]{densenet}
+    \end{figure}
+
+  \end{block}
+
+  \begin{block}{Dense block}
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=0.5\textwidth]{densenet_block}
+    \end{figure}
+  \end{block}
 
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Xception}
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \begin{frame}{Xception}
 
-\end{frame}
+%% \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{MobileNet}
+\begin{frame}{MobileNet \cite{howard_mobilenets:_2017}}
+
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{block}{Depth-wise separable convolution}
+        \begin{figure}[ht]
+          \centering
+          \includegraphics[width=0.6\textwidth]{dw_separable_conv}
+        \end{figure}
+      \end{block}
+
+    \end{column}
+
+    \begin{column}{.5\textwidth}
+      \begin{block}{Architecture}
+        \begin{figure}[ht]
+          \centering
+          \includegraphics[width=\textwidth]{mobilenet}
+        \end{figure}
+
+      \end{block}
+    \end{column}
+  \end{columns}
+
 
 \end{frame}
 
