@@ -48,26 +48,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+
+
 \begin{frame}
   \titlepage
 \end{frame}
-
-\frame{
-  \frametitle{Contents}
-  \tableofcontents[hidesubsections]
-}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Correction TP 1}
 
   \begin{itemize}
+  \item Utilisation de Google Drive
   \item Optimiser le réseau pour les bases Moons et Circles
+    \begin{itemize}
+    \item Meilleures valeurs de $q$ et $lr$ ?
+    \end{itemize}
   \item Codage de l'entropie croisée et de sa dérivée. \alert{Attention à la dernière activation!}
-  \item Comparaison: besoin d'une base de \alert{test}. Quantification.
+  \item Comparaison:
+    \begin{itemize}
+    \item Besoin d'une base de \alert{test}.
+    \item Quantification.
+    \end{itemize}
   \end{itemize}
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Contents}
+  \tableofcontents[hidesubsections]
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -418,8 +428,8 @@
     \emph{CNN} and \emph{ConvNet}
   \end{block}
 
-  \begin{alertblock}<2->{First task: image classification!}
-    In the following, we will focus on image classification.
+  \begin{alertblock}<2->{}
+   Our first task: image classification!
   \end{alertblock}
 
 }
@@ -492,7 +502,7 @@
   \pause
 
   \begin{alertblock}<4->{Image preprocessing}
-    Often, the input image is modified to simplify the optimization of the model.
+    Often, the input image is modified to make the optimization of the model easier.
   \end{alertblock}
 
 }
@@ -553,7 +563,7 @@
 
   \begin{itemize}
   \item Use a sigmoid as last activation
-  \item Use any activation, but follow it by a soft-max operator
+  \item Last layer: a softmax operator
   \end{itemize}
 
 \end{frame}
@@ -615,12 +625,12 @@
 
   \pause
 
-  Note that in most cases $\y$ is a one-hot vector: $\y_i = 1$ for $i=i_0$ and $\y_i=0$ otherwise. Therefore the cross-entropy will ``push'' $\hat{\y_{i_0}}$ towards $1$. For the other elements of $\hat{\y}$ to be pushed towards $0$, $\hat{\y}$ is typically computed by a softmax.
-
+\begin{itemize}
+\item   Note that here $\y$ is a one-hot vector: $\y_i = 1$ for $i=i_0$ and $\y_i=0$ otherwise. Therefore the cross-entropy will ``push'' $\hat{\y_{i_0}}$ towards $1$. For the other elements of $\hat{\y}$ to be pushed towards $0$, $\hat{\y}$ is typically computed by a softmax.
   \pause
+\item   Note that the binary cross-entropy we previously saw is a particular case of cross-entropy.
 
-  Note that the binary cross-entropy we previously saw is a particular case of cross-entropy.
-
+\end{itemize}
 
 \end{frame}
 
@@ -646,6 +656,12 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Flatten}
+
+  \begin{itemize}
+  \item Transforms an array into a vector
+  \item Loss of spatial information
+  \item This is typically done to transition between a convolutional layer and a fully-connected one.
+  \end{itemize}
 
 \end{frame}
 
@@ -820,6 +836,58 @@
 
 
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Dealing with borders}
+
+  \begin{figure}
+    \includegraphics[height=5cm]{conv_border_effect}
+  \end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{First solution: keep only well defined outputs}
+
+  \begin{figure}
+    \includegraphics[height=5cm]{conv_border_effect2}
+  \end{figure}
+
+\begin{itemize}
+\item Pros:
+  \begin{itemize}
+  \item border effect disappears
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item Lack of flexibility
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Second solution: zero padding}
+
+  \begin{figure}
+    \includegraphics[height=5cm]{conv_border_effect3}
+  \end{figure}
+
+\begin{itemize}
+\item Pros:
+  \begin{itemize}
+  \item More flexible architecture
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item Border effect still present
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1237,7 +1305,7 @@
 
   \item Winner of the ImageNet Large Scale Visual Recognition Competition (ILSVRC) in 2014.
 
-  \item Number of parameters: \emph{only} $~5$ million.
+  \item Number of parameters: \emph{only} $5$ million.
 
   \end{itemize}
 
@@ -1313,7 +1381,7 @@
   \begin{itemize}
   \item Winner of the ImageNet Large Scale Visual Recognition Competition (ILSVRC) in 2015.
   \item The authors tested up to 1202 layers. They reported no training difficulties, but overfitting \cite{he_deep_2015}
-  \end{itemize}
+    \end{itemize}
 
 \end{frame}
 
@@ -1386,9 +1454,9 @@
     \end{column}
   \end{columns}
 
+  Number of parameters: $4$  million.
 
 \end{frame}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
