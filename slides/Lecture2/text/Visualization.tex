@@ -62,6 +62,15 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}{Motivation: 3 scenarios}
+\begin{enumerate}
+	\item AI worse than humans: visualization can thus help understanding failure modes to guide the research.
+	\item AI on par with humans: establish appropriate trust and identify and remove potential biases. 
+	\item AI better than humans: visualization can help in machine teaching.
+\end{enumerate}
+\end{frame}
+
+
 % \subsection{Categorization}
 % \begin{frame}{Categorization of visualization approaches}
 % 	\begin{itemize}
@@ -213,23 +222,6 @@ In Convolutional Neural Networks (CNN), a pixel value in activation map $r$ in l
 \section{Visualization of input output relationships}
 \frame{\frametitle{Overview}\tableofcontents[currentsection]}
 
-\begin{frame}{Occlusion of image patches}
-	\begin{itemize}
-		\item The output of a classification network is a vector of posterior probabilities $P(y|x)$, where $x$ is the image and $y$ the class label. 
-		\item Experiment: we occlude a patch in the image and obtain a changed probability \cite{Zeiler:2013}. 
-		\item Now we can assign to every position of the patch in the original image the probability of the correct class and the class label with maximal posterior probability. 
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Occlusion of image patches}
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=.75\textwidth]{../graphics/Vis_occlusion.png}
-  \source{adapted from \cite{Zeiler:2013}}
-\end{figure}
-\end{frame}
-
-
 \begin{frame}{Saliency maps}
 	\begin{figure}[htb]
 	  \centering
@@ -265,6 +257,153 @@ In Convolutional Neural Networks (CNN), a pixel value in activation map $r$ in l
 \end{figure}
 Sensitivity analysis: we can see which pixels would have most effect on the classification results. 
 \end{frame}
+
+\begin{frame}{Occlusion of image patches}
+	\begin{itemize}
+		\item The output of a classification network is a vector of posterior probabilities $P(y|x)$, where $x$ is the image and $y$ the class label. 
+		\item Experiment: we occlude a patch in the image and obtain a changed probability \cite{Zeiler:2013}. 
+		\item Now we can assign to every position of the patch in the original image the probability of the correct class and the class label with maximal posterior probability. 
+		\item While we can therefore measure the importance of parts of the image with respect to the classification result, this method is slow and not very elegant. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Occlusion of image patches}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.75\textwidth]{../graphics/Vis_occlusion.png}
+  \source{adapted from \cite{Zeiler:2013}}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM)}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.9\textwidth]{../graphics/Vis_CAM_principle.pdf}
+  \source{adapted from \cite{Zhou:2016}}
+\end{figure}
+\begin{itemize}
+\item In \cite{Zhou:2016}, the fully connected layers are replaced by Global Average Pooling (GAP). 
+\item The final prediction is then made from the $K$ dimensional vector. The training provides us with a weight vector $w^c$ for each class. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM)}
+\begin{itemize}
+\item More formally, if the last convolutional layer has $K$ feature maps, GAP maps this layer to a $K$-dimensional vector: 
+\begin{equation}
+	GAP(k) = \frac{1}{N}\sum_{i,j}f_k(i,j) \quad \quad k = 1, \ldots, K
+\end{equation}
+where $N$ is the number of neurons in each feature map. 
+\item The score $S_c$ for each class $c$ is then the weighted sum of the vector entries:
+\begin{equation}
+	S_c = \sum_k w_k^c GAP(k)
+\end{equation}
+\item The posterior probabilities are obtained by softmax:
+\begin{equation}
+	P(c \, | \, x) = \frac{\exp{(S_c)}}{\sum_c \exp{(S_c)}}
+\end{equation}
+\item This modified network is then fine-tuned. Often, this simplification is not affecting classification accuracy very seriously \cite{Zhou:2016}. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM)}
+\begin{itemize}
+	\item The class scores can be written as:
+	\begin{equation}
+	S_c = \sum_k w_k^c \frac{1}{N}\sum_{i,j}f_k(i,j) = \frac{1}{N}\sum_{i,j} \sum_k w_k^c f_k(i,j) = \frac{1}{N}\sum_{i,j} M_c(i,j)
+	\end{equation}
+	$M_c$ is a class activation map, which is the weighted average of the last convolutional layer, with the weights optimized for prediction. 
+	\item In practice, we might decide not to take the last convolutional layer, but one that is more upstream in order to get better spatial resolution. 
+	\item In order to overlay to the original image, we simply upscale (interpolation). 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM) - Results}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.8\textwidth]{../graphics/Vis_CAM_Barbell.pdf}
+  \source{adapted from \cite{Zhou:2016}}
+\end{figure}
+We see that the CAM highlights the regions which are discriminative for the predicted class ("barbell"). 
+\end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM) - Results}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.8\textwidth]{../graphics/Vis_CAM_Dome.pdf}
+  \source{Image taken from  \cite{Zhou:2016}}
+\end{figure}
+We observe the variation of the CAM according to the predicted label. Here the correct label would have been "Dome". 
+\end{frame}
+
+\begin{frame}{Generalization of CAM: Grad-CAM}
+\begin{itemize}
+	\item A drawback of CAM is that we are not really analyzing a given network, but we design a similar network that we can then analyze. 
+	\item This can be avoided by grad-CAM \cite{Selvaraju:2020}, that is based on the evaluation of gradients:
+	\begin{equation}
+		\alpha_k^c = \frac{1}{N}\sum_{i,j} \frac{\partial S_c}{\partial f_k(i,j)}
+	\end{equation}
+	\item If the fully connected layer is replaced by a global average pooling, this is exactly identical to the $w_k^c$ we have calculated in CAM. 
+	\item The final map is then calculated by:
+	\begin{equation}
+	M^{gradCAM}(c) = ReLu(\sum_k \alpha_k^c f_k)
+	\end{equation}
+	The ReLu is used to only account for positive contributions. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Grad-CAM results}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.7\textwidth]{../graphics/Vis_GRADCAM_cat_and_dog.pdf}
+  \source{adapted from \cite{Selvaraju:2020}}
+\end{figure}
+Grad-CAM result for an image with double label ("tiger-cat" and "boxer"). 
+\end{frame}
+
+\begin{frame}{Grad-CAM results: counter-factual image regions}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.7\textwidth]{../graphics/Vis_GRADCAM_Counter.pdf}
+  \source{adapted from \cite{Selvaraju:2020}}
+\end{figure}
+Here, the authors investigated which regions would rather make the network change its prediction. This is simply done by inverting the sign: 
+\begin{equation}
+	\alpha_k^c = \frac{1}{N}\sum_{i,j} -\frac{\partial S_c}{\partial f_k(i,j)}
+\end{equation}
+\end{frame}
+
+\begin{frame}{Grad-CAM results: spotting bias}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.6\textwidth]{../graphics/Vis_GRADCAM_bias.pdf}
+  \source{adapted from \cite{Selvaraju:2020}}
+\end{figure}
+In \cite{Selvaraju:2020}, a neural network was trained to distinguish between two classes "Nurse" and "Doctor". 
+The training set contained a gender bias. We see that the important regions differ when the bias is removed.
+%We see that the decision was then made according to regions in the face and hair. For the unbiased version, the decision was based on the coat color, the sleeves and the stethoscope. 
+\end{frame}
+
+\begin{frame}{Maximally activating images}
+\begin{itemize}
+	\item Another strategy is to generate an image that maximizes a particular neuron, typically a class score:
+	\begin{equation}
+	X^{\ast} = \argmax_{X} S_c(X) - \lambda \|X\|^2
+	\end{equation}
+	\item This can be achieved by a similar technique as training the network, but this time the parameters of the network are fixed and the image is adapted as to maximize the objective function. 
+	\item Here, we do not optimize the softmax, but the class score, as the softmax contains contributions from all classes. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Maximally activating images - Results}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.9\textwidth]{../graphics/Vis_dream.pdf}
+  \source{adapted from \cite{Simonyan:2014}}
+\end{figure}
+We observe various elements the network is trained to react on.
+\end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -420,6 +559,7 @@ The image analysis community has developed many algorithms for eye detection; he
 	\item Visualization can also allow us to compare different architectures or initialization schemes.
 \end{itemize}
 \end{frame}
+
 
 %\begin{frame}{Spotting problems by visual inspection of the loss}
 %\begin{itemize}
