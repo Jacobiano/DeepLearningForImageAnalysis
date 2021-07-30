@@ -48,10 +48,32 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+
+
 \begin{frame}
   \titlepage
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Correction TP 1}
+
+  \begin{itemize}
+  \item Utilisation de Google Drive
+  \item Optimiser le réseau pour les bases Moons et Circles
+    \begin{itemize}
+    \item Meilleures valeurs de $q$ et $lr$ ?
+    \end{itemize}
+  \item Codage de l'entropie croisée et de sa dérivée. \alert{Attention à la dernière activation!}
+  \item Comparaison:
+    \begin{itemize}
+    \item Besoin d'une base de \alert{test}.
+    \item Quantification.
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
   \frametitle{Contents}
   \tableofcontents[hidesubsections]
@@ -107,13 +129,138 @@
       \item At what time of the day was the photograph taken?
       \end{itemize}
       \pause
-  \begin{alertblock}{}
-    Designing computer vision systems that are able to extract semantic information from an image is a difficult task.
-  \end{alertblock}
+      \begin{alertblock}{}
+        Designing computer vision systems that are able to extract semantic information from an image is a difficult task.
+      \end{alertblock}
 
     \end{column}
 
   \end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Image analysis applications}
+
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.76\textwidth]{applis_dl_sup}
+    \includegraphics[width=0.33\textwidth]{applis_dl_nonsup}
+  \end{figure}
+
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Image analysis applications}
+
+  \begin{itemize}
+  \item classification
+  \item quantification
+  \item object localization
+  \item segmentation
+  \item transformation (filtering, in-painting, editing, colorization…)
+  \item image caption generation
+  \item 2D to 3D (stereo matching, 3D reconstruction, …)
+  \item motion estimation
+  \item style transfer
+  \item compression
+  \item anomalous image detection
+  \item image generation
+  \item etc.
+  \end{itemize}
+
+
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Image processing approach}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{block}{}
+        \begin{itemize}
+        \item Build a geometrical model for the objects of interest
+        \item Implement this model using image processing operators
+        \end{itemize}
+      \end{block}
+
+      \pause
+
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{zhang_MA}\\
+      \scriptsize{Detail of eye fundus image with microaneurysms to be detected}
+      \source{\cite{zhang_application_2011}}
+
+    \end{column}
+  \end{columns}
+
+  \pause
+
+  \begin{itemize}
+  \item[$\oplus$] This approach works correctly when the objects are not too complex.
+  \item[$\ominus$] If objects are difficult to model, machine learning methods can bring a solution.
+  \end{itemize}
+
+
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Classical machine learning approach}
+
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \begin{block}{}
+        \begin{itemize}
+        \item Compute features from the image
+        \item Apply machine learning to those features
+        \end{itemize}
+      \end{block}
+
+    \end{column}
+    \pause
+    \begin{column}{.65\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{zhang_EX}\\
+      \scriptsize{Exudates segmentation: original image, ground-truth and candidates with associated probabilities obtained with machine learning }
+      \source{\cite{zhang_exudate_2014}}
+    \end{column}
+  \end{columns}
+  \vspace{1em}
+  \pause
+  \begin{itemize}
+  \item[$\oplus$] Works well with the right features
+  \item[$\ominus$] An expert is required to define those features - and this can be a long process
+  \item[$\ominus$] Annotated data is required
+  \end{itemize}
+
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Deep learning approach}
+
+  \begin{block}{}
+    \begin{itemize}
+    \item Directly take as input the image pixels
+    \item The network is supposed to build its own features
+    \end{itemize}
+  \end{block}
+
+  \begin{itemize}
+  \item[$\oplus$] Good (impressive!) results
+  \item[$\ominus$] A large amount of annotated data is required
+  \item[$\ominus$] Extensive computing resources needed
+  \end{itemize}
 
 \end{frame}
 
@@ -172,9 +319,9 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{ImageNet project}
+\begin{frame}{ImageNet project \tiny{\cite{russakovsky_imagenet_2015}}}
 
-  Since 2010, ImageNet organizes and annual challenge: The ImageNet Large Scale Visual Recognition Challenge (ILSVRC), that constitutes a breakthrough in the design of image analysis challenges by its size.
+  Since 2010, ImageNet organizes and annual challenge: The ImageNet Large Scale Visual Recognition Challenge (ILSVRC), that constituted a breakthrough in the design of image analysis challenges by its size.
 
   \begin{block}{Image classification task (since 2012)}
     \begin{itemize}
@@ -190,19 +337,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{ImageNet projet}
 
+  \centering
+  \includegraphics[width=0.20\textwidth]{ilsvrc_guitar2}\hspace{0.1em}
+  \includegraphics[width=0.20\textwidth]{ilsvrc_guitar3}\\
+  \includegraphics[width=0.39\textwidth]{ilsvrc_guitar1}\hspace{0.1em}
+  \includegraphics[width=0.39\textwidth]{ilsvrc_guitar4}\\
+  Examples from the \emph{acoustic guitar} class
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Deep learning achievements}
+
   \begin{columns}
     \begin{column}{.5\textwidth}
-      \centering
-      \includegraphics[width=0.31\textwidth]{ilsvrc_guitar2}\hspace{0.1em}
-      \includegraphics[width=0.31\textwidth]{ilsvrc_guitar3}\\
-      \includegraphics[width=0.52\textwidth]{ilsvrc_guitar1}\\
-      \includegraphics[width=0.52\textwidth]{ilsvrc_guitar4}\\
-      Examples from the \emph{acoustic guitar} class
+      \begin{block}{ImageNet Large Scale Visual Recognition Challenge (ILSVRC)}
+        2012: \emph{AlexNet} \cite{krizhevsky_imagenet_2012} won this challenge by a large margin
+      \end{block}
 
     \end{column}
 
     \begin{column}{.5\textwidth}
-      \centering
       \includegraphics[height=0.75\textheight]{ImageNet_error_history}
 
       \source{Wikipedia (CC BY-SA 4.0)}
@@ -210,149 +367,52 @@
     \end{column}
   \end{columns}
 
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Image processing approach}
-
-\begin{columns}
-  \begin{column}{.5\textwidth}
-  \begin{block}{}
-    \begin{itemize}
-    \item Build a geometrical model for the objects of interest
-    \item Implement this model using image processing operators
-    \end{itemize}
-  \end{block}
-
-  \pause
-
-  \end{column}
-  \begin{column}{.5\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{zhang_MA}\\
-  \scriptsize{Detail of eye fundus image with microaneurysms to be detected}
-  \source{\cite{zhang_application_2011}}
-
-  \end{column}
-\end{columns}
-
-\pause
-
-  \begin{itemize}
-  \item[+] This approach works correctly when the objects are not too complex.
-  \item[-] If objects are difficult to model, machine learning methods can bring a solution.
-  \end{itemize}
-
-
-\end{frame}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame{
-  \frametitle{Classical machine learning approach}
-
-\begin{columns}
-  \begin{column}{.35\textwidth}
-  \begin{block}{}
-    \begin{itemize}
-    \item Compute features from the image
-    \item Apply machine learning to those features
-    \end{itemize}
-  \end{block}
-
-  \end{column}
-\pause
-\begin{column}{.65\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{zhang_EX}\\
-  \scriptsize{Exudates segmentation: original image, ground-truth and candidates with associated probabilities obtained with machine learning }
-    \source{\cite{zhang_exudate_2014}}
-  \end{column}
-\end{columns}
-\vspace{1em}
-\pause
-  \begin{itemize}
-  \item[+] Works well with the right features
-  \item[-] An expert is required to define those features - and this can be a long process
-  \item[-] Annotated data is required
-  \end{itemize}
-
-
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Deep learning approach}
-
-  \begin{block}{}
-    \begin{itemize}
-    \item Directly take as input the image pixels
-    \item The network is supposed to build its own features
-    \end{itemize}
-  \end{block}
-
-  \begin{itemize}
-  \item[+] Good (impressive!) results
-  \item[-] A large amount of annotated data is required
-  \end{itemize}
-
-\end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \frame{
-  \frametitle{Some accomplishments}
-
-  \begin{block}{ImageNet Large Scale Visual Recognition Challenge (ILSVRC)}
-    2012: \emph{AlexNet} \cite{krizhevsky_imagenet_2012} won this challenge by a large margin
-  \end{block}
-
-  The database contains more that 1 million training images, belonging to 1000 different classes.
-
-
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\frame{
-  \frametitle{Some accomplishments (cont.)}
+  \frametitle{Deep learning achievements (cont.)}
 
   \begin{itemize}
   \item 2011: first super-human performance, IJCNN 2011 traffic sign recognition contest \cite{ciresan_committee_2011}
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=0.7\textwidth]{ijcnn2011.png}
+      \source{\cite{stallkamp_german_2011}}
+    \end{figure}
+
   \item 2012: visual object detection (Mitosis detection in breast cancer histology \cite{ciresan_mitosis_2013})
   \item 2012: segmentation competition (neuronal membranes in electron microscopy images \cite{ciresan_deep_2012})
-  \item 2016: AlphaGo beats Lee Sedol, one of the best go players, in a 5-game match
   \end{itemize}
 
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Deep learning image applications}
+\begin{frame}{Deep learning achievements (cont.)}
 
-  \begin{itemize}
-  \item classification
-  \item object localization
-  \item semantic segmentation
-  \item instance segmentation
-  \item transformation (filtering, in-painting, editing, colorization…)
-  \item quantification
-  \item compression
-  \item image caption generation
-  \item 2D to 3D (stereo matching, 3D reconstruction, …)
-  \item motion estimation
-  \item style transfer
-  \item anomalous image detection
-  \item image generation
-  \end{itemize}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{itemize}
+      \item 2016: AlphaGo beats Lee Sedol, one of the best go players, in a 5-game match
+      \end{itemize}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+
+      \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\textwidth]{nature_go.jpg}
+      \end{figure}
+    \end{column}
+  \end{columns}
+
+
 
 
 \end{frame}
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
   \frametitle{Convolutional neural networks in deep learning}
 
@@ -368,8 +428,8 @@
     \emph{CNN} and \emph{ConvNet}
   \end{block}
 
-  \begin{alertblock}<2->{First task: image classification!}
-    In the following, we will focus on image classification.
+  \begin{alertblock}<2->{}
+   Our first task: image classification!
   \end{alertblock}
 
 }
@@ -404,10 +464,9 @@
 
 
   \begin{figure}
-    \includegraphics[height=5cm]{network}
+    \includegraphics[height=5cm]{mini_reseau3_bis}
   \end{figure}
 
-  {\small(from http://www.jtoy.net)}
 
 }
 
@@ -425,18 +484,26 @@
 
     \begin{column}<1->{0.45\textwidth}
       \begin{center}
-        \includegraphics[width=0.50\textwidth]{image_as_pixels.png}
+        \includegraphics<1-2>[width=0.9\textwidth]{cnn_pixels.png}
+        \includegraphics<3->[width=0.9\textwidth]{imagette.png}
       \end{center}
     \end{column}
 
     \begin{column}<2->{0.45\textwidth}
       \begin{center}
-        \includegraphics[width=0.50\textwidth]{image_as_neurons.png}
+        \includegraphics<2>[width=0.9\textwidth]{cnn_neurones.png}
+        \includegraphics<3->[width=0.9\textwidth]{imagette_neurones.png}
 
       \end{center}
     \end{column}
 
   \end{columns}
+
+  \pause
+
+  \begin{alertblock}<4->{Image preprocessing}
+    Often, the input image is modified to make the optimization of the model easier.
+  \end{alertblock}
 
 }
 
@@ -481,7 +548,7 @@
     \end{itemize}
   \end{block}
 
-This is called one-hot encoding. The resulting vector is a one-hot vector.
+  This is called \alert{one-hot encoding}. The resulting vector is a one-hot vector.
 
 \end{frame}
 
@@ -496,7 +563,7 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 
   \begin{itemize}
   \item Use a sigmoid as last activation
-  \item Use any activation, but follow it by a soft-max operator
+  \item Last layer: a softmax operator
   \end{itemize}
 
 \end{frame}
@@ -558,17 +625,17 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 
   \pause
 
-  Note that in most cases $\y$ is a one-hot vector: $\y_i = 1$ for $i=i_0$ and $\y_i=0$ otherwise. Therefore the cross-entropy will ``push'' $\hat{\y_{i_0}}$ towards $1$. For the other elements of $\hat{\y}$ to be pushed towards $0$, $\hat{\y}$ is typically computed by a softmax.
+\begin{itemize}
+\item   Note that here $\y$ is a one-hot vector: $\y_i = 1$ for $i=i_0$ and $\y_i=0$ otherwise. Therefore the cross-entropy will ``push'' $\hat{\y_{i_0}}$ towards $1$. For the other elements of $\hat{\y}$ to be pushed towards $0$, $\hat{\y}$ is typically computed by a softmax.
+  \pause
+\item   Note that the binary cross-entropy we previously saw is a particular case of cross-entropy.
 
-   \pause
-
-  Note that the binary cross-entropy we previously saw is a particular case of cross-entropy.
-
+\end{itemize}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Image classification a fully-connected NN}
+\begin{frame}{Image classification with a fully-connected NN}
 
   \begin{block}{Input}
     The input image, containing $p$ pixels, is transformed into a vector of length $p$.
@@ -578,28 +645,40 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
     For $q$ classes, the output will be a vector of length $q$.
   \end{block}
 
-\pause
+  \pause
 
   \begin{block}{Example: image of size $4 \times 2$, $4$ possible classes}
     \centering
-      \includegraphics[width=0.6\textwidth]{network}
+    \includegraphics[width=0.6\textwidth]{mini_reseau3_bis}
   \end{block}
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Flatten}
+
+  \begin{itemize}
+  \item Transforms an array into a vector
+  \item Loss of spatial information
+  \item This is typically done to transition between a convolutional layer and a fully-connected one.
+  \end{itemize}
+
+\end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Image classification using a fully-connected NN}
 
-    \centering
-      \includegraphics[width=0.6\textwidth]{network}
+  \centering
+  \includegraphics[width=0.6\textwidth]{mini_reseau3_bis}
 
-      \begin{itemize}[<+->]
-      \item A small image contains at least $100\,000$ pixels
-      \item The number of parameters between two layers of that size is $10^5 \times (10^5 + 1)$!
-      \item This approach is not feasible...
-      \item Moreover, this approach does not take into account the local structure of images.
-      \end{itemize}
+  \begin{itemize}[<+->]
+  \item A small image contains at least $100\,000$ pixels
+  \item The number of parameters between two layers of that size is $10^5 \times (10^5 + 1)$!
+  \item This approach is not feasible...
+  \item Moreover, this approach does not take into account the local structure of images.
+  \end{itemize}
 
 \end{frame}
 
@@ -636,30 +715,30 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Layers representation}
 
-    \begin{block}{}
-      For illustration purposes, in the following slides images and filters will be displayed as rows of neurons - these can be seen as 1D arrays or as sections of 2D arrays.
+  \begin{block}{}
+    For illustration purposes, in the following slides images and filters will be displayed as rows of neurons -- these can be seen as 1D arrays or as sections of 2D arrays.
 
-      We represent connections between neurons. Each such connection is associated to a weight. The bias are not represented, to avoid clutter, but must not be forgotten.
+    We represent some connections between neurons. Each such connection is associated to a weight. The bias are not represented, to avoid clutter, but must not be forgotten.
   \end{block}
 
   \begin{columns}
 
     \begin{column}<1->{0.33\textwidth}
       \begin{center}
-        \includegraphics[width=0.60\textwidth]{image_as_pixels.png}
+        \includegraphics[width=0.80\textwidth]{cnn_pixels.png}
       \end{center}
     \end{column}
 
     \begin{column}<2->{0.33\textwidth}
       \begin{center}
-        \includegraphics[width=0.60\textwidth]{image_as_neurons.png}
+        \includegraphics[width=0.80\textwidth]{cnn_neurones.png}
 
       \end{center}
     \end{column}
 
     \begin{column}<3->{0.33\textwidth}
       \begin{center}
-        \includegraphics[width=0.15\textwidth]{image_as_neurons_col.png}
+        \includegraphics[width=0.07\textwidth]{col.png}
 
       \end{center}
     \end{column}
@@ -758,6 +837,74 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Dealing with borders}
+
+  \begin{figure}
+    \includegraphics[height=5cm]{conv_border_effect}
+  \end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{First solution: keep only well defined outputs}
+
+  \begin{figure}
+    \includegraphics[height=5cm]{conv_border_effect2}
+  \end{figure}
+
+\begin{itemize}
+\item Pros:
+  \begin{itemize}
+  \item border effect disappears
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item Lack of flexibility
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Second solution: zero padding}
+
+  \begin{figure}
+    \includegraphics[height=5cm]{conv_border_effect3}
+  \end{figure}
+
+\begin{itemize}
+\item Pros:
+  \begin{itemize}
+  \item More flexible architecture
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item Border effect still present
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Convolutional layer illustration in 2D}
+
+
+  \begin{itemize}
+  \item Illustration of a convolution of size $3 \times 3$
+  \end{itemize}
+
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{cnn_complet}
+  \end{center}
+
+
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
@@ -795,7 +942,7 @@ This is called one-hot encoding. The resulting vector is a one-hot vector.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Dilated convolutions}
 
-Dilated convolutions are used the increase the size of the receptive field of the network.
+  Dilated convolutions are used the increase the size of the receptive field of the network.
 
   \begin{columns}
 
@@ -831,20 +978,20 @@ Dilated convolutions are used the increase the size of the receptive field of th
   \frametitle{Several filters in the same convolutional layer}
 
 
-\begin{columns}
-  \begin{column}{.53\textwidth}
-  \begin{center}
-    \includegraphics[width=\textwidth]{convolutional_layer2.png}
-  \end{center}
+  \begin{columns}
+    \begin{column}{.53\textwidth}
+      \begin{center}
+        \includegraphics[width=\textwidth]{convolutional_layer2.png}
+      \end{center}
 
-  \end{column}
+    \end{column}
 
-  \begin{column}{.47\textwidth}
-\begin{block}{Note on vocabulary}
-  The depth of a layer is often called the \alert{number of filters}.
-\end{block}
-  \end{column}
-\end{columns}
+    \begin{column}{.47\textwidth}
+      \begin{block}{Note on vocabulary}
+        The depth of a layer is often called the \alert{number of filters}.
+      \end{block}
+    \end{column}
+  \end{columns}
 
 
 
@@ -931,9 +1078,9 @@ Dilated convolutions are used the increase the size of the receptive field of th
 
   \begin{itemize}
   \item The previous layer must contain the same number of filters
-    \item The number of parameters is drastically reduced
-    \item These layers are interesting when combined with $1 \times 1$ convolutions...
-\end{itemize}
+  \item The number of parameters is drastically reduced
+  \item These layers are interesting when combined with $1 \times 1$ convolutions...
+  \end{itemize}
 
 
 \end{frame}
@@ -953,13 +1100,13 @@ Dilated convolutions are used the increase the size of the receptive field of th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Decomposed convolution}
 
-The combination of depth-wise with $1 \times 1$ convolutions gives decomposed convolutions.
+  The combination of depth-wise with $1 \times 1$ convolutions gives decomposed convolutions.
 
   \begin{center}
     \includegraphics[height=0.66\textheight]{conv_dec.png}
   \end{center}
 
-They are somehow a factorization of classical convolutions. Thus they allow reducing the number of parameters.
+  They are somehow a factorization of classical convolutions. Thus they allow reducing the number of parameters.
 
 \end{frame}
 
@@ -990,11 +1137,6 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
   Note however a current trend that consists in using convolutional layers with a stride of 2
 
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Flatten}
-
-\end{frame}
 
 
 
@@ -1121,6 +1263,12 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 %% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Some classical architectures}
+\label{sec:architectures}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \frame{
   \frametitle{VGGnet}
@@ -1157,7 +1305,7 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
   \item Winner of the ImageNet Large Scale Visual Recognition Competition (ILSVRC) in 2014.
 
-  \item Number of parameters: \emph{only} $~5$ million.
+  \item Number of parameters: \emph{only} $5$ million.
 
   \end{itemize}
 
@@ -1174,11 +1322,11 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
   \includegraphics[width=\textwidth]{googlenet2_outputs.png}
 
-\begin{itemize}
-\item Two extra outputs are added
-\item They are added to the final output with a 0.3 weight
-\item They help propagate gradient through the low levels of the network
-\end{itemize}
+  \begin{itemize}
+  \item Two extra outputs are added
+  \item They are added to the final output with a 0.3 weight
+  \item They help propagate gradient through the low levels of the network
+  \end{itemize}
 
 \end{frame}
 
@@ -1187,9 +1335,9 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
   \includegraphics[width=\textwidth]{googlenet2_modules.png}
 
-\begin{itemize}
-\item 9 inception modules
-\end{itemize}
+  \begin{itemize}
+  \item 9 inception modules
+  \end{itemize}
 
 \end{frame}
 
@@ -1215,9 +1363,9 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
     \source{From \cite{szegedy_going_2014}}
   \end{figure}
 
-\begin{itemize}
-\item $1 \times 1$ convolutions are used to keep the number of parameters low.
-\end{itemize}
+  \begin{itemize}
+  \item $1 \times 1$ convolutions are used to keep the number of parameters low.
+  \end{itemize}
 
 \end{frame}
 
@@ -1233,7 +1381,7 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
   \begin{itemize}
   \item Winner of the ImageNet Large Scale Visual Recognition Competition (ILSVRC) in 2015.
   \item The authors tested up to 1202 layers. They reported no training difficulties, but overfitting \cite{he_deep_2015}
-  \end{itemize}
+    \end{itemize}
 
 \end{frame}
 
@@ -1241,9 +1389,9 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{ResNet module}
 
-\begin{itemize}
-\item \alert{Skip connections} help backpropagation
-\end{itemize}
+  \begin{itemize}
+  \item \alert{Skip connections} help backpropagation
+  \end{itemize}
 
   \begin{figure}[ht]
     \centering
@@ -1254,28 +1402,82 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{DenseNet\cite{huang_densely_2018}}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{block}{Architecture}
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=\textwidth]{densenet}
+    \end{figure}
 
-\frame{
-  \frametitle{Current trends}
-
-  \begin{itemize}
-  \item Small convolutions ($3\times3$)
-  \item Dimension reduction using $1 \times 1$ convolutions
-  \item Increasing number of layers
-  \item Skip connections
-  \end{itemize}
-
-  \begin{block}{}
-    VGG, GoogLeNet and ResNet (and their variants) are still among the most used architectures for image classification and other related tasks.
   \end{block}
 
-}
+  \begin{block}{Dense block}
+    \begin{figure}[ht]
+      \centering
+      \includegraphics[width=0.5\textwidth]{densenet_block}
+    \end{figure}
+  \end{block}
+
+\end{frame}
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \begin{frame}{Xception}
+
+%% \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{MobileNet \cite{howard_mobilenets:_2017}}
 
 
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{block}{Depth-wise separable convolution}
+        \begin{figure}[ht]
+          \centering
+          \includegraphics[width=0.6\textwidth]{dw_separable_conv}
+        \end{figure}
+      \end{block}
 
+    \end{column}
+
+    \begin{column}{.5\textwidth}
+      \begin{block}{Architecture}
+        \begin{figure}[ht]
+          \centering
+          \includegraphics[width=\textwidth]{mobilenet}
+        \end{figure}
+
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  Number of parameters: $4$  million.
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% \frame{
+%%   \frametitle{Current trends}
+
+%%   \begin{itemize}
+%%   \item Small convolutions ($3\times3$)
+%%   \item Dimension reduction using $1 \times 1$ convolutions
+%%   \item Increasing number of layers
+%%   \item Skip connections
+%%   \end{itemize}
+
+%%   \begin{block}{}
+%%     VGG, GoogLeNet and ResNet (and their variants) are still among the most used architectures for image classification and other related tasks.
+%%   \end{block}
+
+%% }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1290,24 +1492,17 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
   \item Caffe (Univ. of California, Berkeley - BSD licence)
   \item Microsoft Cognitive Toolkit (MIT licence)
   \item MatConvNet (for MatLab users)
-  \item Theano (Montreal Institute for Learning Algorithms; not maintained anymore)
   \end{itemize}
 
   \begin{block}{Comments}
     \begin{itemize}
     \item Most of these libraries are distributed with very permissive licences
     \item Most of them use Python as prototyping language
-    \item \emph{Keras} is a very easy to use interface to Tensorflow.
+    \item \alert{Keras} is a very easy to use interface to Tensorflow.
     \end{itemize}
 
   \end{block}
-
-
 }
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{A revolution in image analysis}
@@ -1316,6 +1511,7 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
   \item Deep learning has brought an undeniable break-through in image analysis (as in other fields)
   \item A significant part of research efforts in image analysis today is based on deep learning
   \item Its applications are ubiquitous
+  \item Not only we can improve on existing tasks, but we can also treat some problems in a completely different way (for example, image generation).
   \end{itemize}
 
 \end{frame}
@@ -1330,7 +1526,7 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
   \item Enough annotated data
   \item A lot of fiddling (different architectures; hyper-parameters; optimization)
-  \item One (or, even better, several) powerful GPUs
+  \item Expensive, energy hungry, computing resources
 
   \end{itemize}
 
@@ -1344,7 +1540,6 @@ They are somehow a factorization of classical convolutions. Thus they allow redu
 
 \frame{
   \frametitle{ConvNets can be fooled}
-
 
   Deep learning can produce astonishing results \cite{nguyen_deep_2015}...
   \begin{figure}

@@ -62,6 +62,15 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}{Motivation: 3 scenarios}
+\begin{enumerate}
+	\item AI worse than humans: visualization can thus help understanding failure modes to guide the research.
+	\item AI on par with humans: establish appropriate trust and identify and remove potential biases. 
+	\item AI better than humans: visualization can help in machine teaching.
+\end{enumerate}
+\end{frame}
+
+
 % \subsection{Categorization}
 % \begin{frame}{Categorization of visualization approaches}
 % 	\begin{itemize}
@@ -137,34 +146,50 @@ In Convolutional Neural Networks (CNN), a pixel value in activation map $r$ in l
 \end{itemize}
 \end{frame}
 
-\begin{frame}{t-SNE (sketch) 1/2}
+\begin{frame}{t-SNE (sketch) 1/3}
 \begin{itemize}
 	\item Many low dimensional representations: PCA, ICA, $\ldots$
 	\item A recent technique that is widely used in this field is called \emph{t-Distributed Stochastic Neighbor Embedding (t-SNE)} \cite{Maaten:2008}. 
 	\item Let $\{x_i\}_{0\leq i < N}$ be the set of representations for all images in the training set. 
-	\item We define the pairwise probabilities $p_{ij}$ that $x_i$ and $x_j$ are neighbors (which depends on $\|x_i-x_j\|$). 
-	\item We now seek a low-dimensional space for which these neighborhood probabilities $q_{ij}$ are conserved. 
-	\item This is achieved by minimizing for each point $x_i$ the Kulback-Leibler divergence between the distributions $P_i$ (distribution of $p_{ij}$) and $Q_i$ (distribution of $q_{ij}$)
-\end{itemize}
-\end{frame}
-
-\begin{frame}{t-SNE (sketch) 2/2}
-\begin{itemize}
-	\item The cost $C$ that is minimized: 
+	\item We define the pairwise probability that $x_j$ is a neighbor of $x_i$ under the assumption that the neighbor probability is a Gaussian centered in $x_i$:  
 	\begin{equation}
-		C = \sum_i KL(P_i\|Q_i) = \sum_i \sum_j p_{ij}\log{\frac{p_{ij}}{q_{ij}}}
+	p_{j|i} = \frac{\exp{\left(-\frac{\|x_i - x_j\|^2}{2 \sigma_i^2}\right)}}{\sum_{k\neq i} \exp{\left(-\frac{\|x_i - x_k\|^2}{2 \sigma_i^2}\right)} }
 	\end{equation}
-	\item If $x_i$ and $x_j$ are close in the original space, the algorithm will try to push $q_{ij}$ to become close to $x_{ij}$. 
-	\item If $x_i$ and $x_j$ are far in the original space, only a small contribution is to be expected in any case. 
-	\item For this reason, t-SNE is known to respect local structure.  	
+	Here, the parameter $\sigma_i$ varies with the sample $x_i$. 
 \end{itemize}
 \end{frame}
 
-\begin{frame}{t-SNE map: example (cell images)}
+
+\begin{frame}{t-SNE (sketch) 2/3}
+\begin{itemize}
+
+	\item We now want to map the data $\mathcal{X} = \{x_i\}$ to low dimensional representations $\mathcal{Y} = \{y_i\}$ for which these neighborhood probabilities in the projected space $q_{j|i}$ are conserved: 
+	\begin{equation}
+	q_{j|i} = \frac{\exp{\left(-\|y_i - y_j\|^2\right)}}{\sum_{k\neq i} \exp{\left(-\|y_i - y_k\|^2\right)} }
+	\end{equation}
+	\item This is achieved by minimizing the Kulback-Leibler divergence between the distributions $P_i$ (distribution of $p_{j|i}$) and $Q_i$ (distribution of $q_{j|i}$): 
+	\begin{equation}
+		C = \sum_i KL(P_i\|Q_i) = \sum_i \sum_j p_{j|i}\log{\frac{p_{j|i}}{q_{j|i}}}
+	\end{equation}
+	\item If $x_i$ and $x_j$ are close in the original space, the algorithm will try to push $q_{j|i}$ to become close to $p_{j|i}$. 
+	\item If $x_i$ and $x_j$ are far in the original space, they may or may not be far in the projected space. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{t-SNE (sketch) 3/3}
+\begin{itemize}
+	\item The parameters $\sigma_i$ are determined by the algorithm. 
+	\item They vary according to the neighbor density, such that for each $x_i$ we have roughly the same number of neighbors. 
+	\item The user chooses a value for the \textit{perplexity}, which effectively measures the effective number of neighbors. 
+	\item The problem now resumes to solving $\min_{y_i} C$ by gradient descent.
+	\item Importantly, this method does not provide a transformation: the minimization is carried out w.r.t. $y_i$. If there is a new datapoint, the minimization problem has to be solved again. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{t-SNE map: example (localization patterns inside cells)}
 \begin{figure}[htb]
   \centering
-  \subfloat{\includegraphics[width=0.4\textwidth]{../graphics/Vis_tsne.pdf}} \hspace{1cm}
-  \subfloat{\includegraphics[width=0.4\textwidth]{../graphics/Vis_tsne2.pdf}} 
+  \includegraphics[width=\textwidth]{../graphics/Vis_tsne.pdf}
 \end{figure}
 \end{frame}
 
@@ -197,11 +222,48 @@ In Convolutional Neural Networks (CNN), a pixel value in activation map $r$ in l
 \section{Visualization of input output relationships}
 \frame{\frametitle{Overview}\tableofcontents[currentsection]}
 
+\begin{frame}{Saliency maps}
+	\begin{figure}[htb]
+	  \centering
+	  \includegraphics[width=\textwidth]{../graphics/Vis_saliency_map_principle.pdf}
+	\end{figure}
+\begin{itemize}
+	\item For each pixel in the input image we can calculate the derivative of the loss with respect to that pixel value \cite{Simonyan:2013}.
+	\item This allows us to visualize how much the output changes with small variations of the pixel values.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Saliency maps}
+\begin{itemize}
+	\item Calculation: simple backpropagation:
+	\begin{equation}
+		\left|\frac{\partial L}{\partial x_{i,j}}\right|
+	\end{equation} 
+	\item Unpooling: the gradient is redirected to the selected input neuron (the one with maximal activation).
+	\item ReLu: multiplication of the backpropagated gradient signal by the indicator function.
+	\item Filtering: convolution with the transposed filter response.
+	\begin{eqnarray}
+		z &=& x \ast W \nonumber \\
+		\frac{\partial L}{\partial x} &=& \frac{\partial L}{\partial z} \ast W^T 
+	\end{eqnarray}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Saliency maps}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=\textwidth]{../graphics/Vis_saliency_maps.png}
+  \source{adapted from \cite{Simonyan:2013}}
+\end{figure}
+Sensitivity analysis: we can see which pixels would have most effect on the classification results. 
+\end{frame}
+
 \begin{frame}{Occlusion of image patches}
 	\begin{itemize}
 		\item The output of a classification network is a vector of posterior probabilities $P(y|x)$, where $x$ is the image and $y$ the class label. 
 		\item Experiment: we occlude a patch in the image and obtain a changed probability \cite{Zeiler:2013}. 
 		\item Now we can assign to every position of the patch in the original image the probability of the correct class and the class label with maximal posterior probability. 
+		\item While we can therefore measure the importance of parts of the image with respect to the classification result, this method is slow and not very elegant. 
 	\end{itemize}
 \end{frame}
 
@@ -213,25 +275,135 @@ In Convolutional Neural Networks (CNN), a pixel value in activation map $r$ in l
 \end{figure}
 \end{frame}
 
-
-\begin{frame}{Saliency maps}
-	\begin{figure}[htb]
-	  \centering
-	  \includegraphics[width=\textwidth]{../graphics/Vis_saliency_map_principle.pdf}
-	\end{figure}
-	For each pixel in the input image we can calculate the derivative of the loss with respect to that pixel value \cite{Simonyan:2013}. 
-	This allows us to visualize how much the output changes with changes in the pixel values.
-\end{frame}
-
-\begin{frame}{Saliency maps}
+\begin{frame}{Class Activation Mapping (CAM)}
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=\textwidth]{../graphics/Vis_saliency_maps.png}
-  \source{adapted from \cite{Simonyan:2013}}
+  \includegraphics[width=.9\textwidth]{../graphics/Vis_CAM_principle.pdf}
+  \source{adapted from \cite{Zhou:2016}}
 \end{figure}
-With this, we can see which pixels contribute to the classification result. 
-Saliency maps can also be used for unsupervised segmentation.
+\begin{itemize}
+\item In \cite{Zhou:2016}, the fully connected layers are replaced by Global Average Pooling (GAP). 
+\item The final prediction is then made from the $K$ dimensional vector. The training provides us with a weight vector $w^c$ for each class. 
+\end{itemize}
 \end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM)}
+\begin{itemize}
+\item More formally, if the last convolutional layer has $K$ feature maps, GAP maps this layer to a $K$-dimensional vector: 
+\begin{equation}
+	GAP(k) = \frac{1}{N}\sum_{i,j}f_k(i,j) \quad \quad k = 1, \ldots, K
+\end{equation}
+where $N$ is the number of neurons in each feature map. 
+\item The score $S_c$ for each class $c$ is then the weighted sum of the vector entries:
+\begin{equation}
+	S_c = \sum_k w_k^c GAP(k)
+\end{equation}
+\item The posterior probabilities are obtained by softmax:
+\begin{equation}
+	P(c \, | \, x) = \frac{\exp{(S_c)}}{\sum_c \exp{(S_c)}}
+\end{equation}
+\item This modified network is then fine-tuned. Often, this simplification is not affecting classification accuracy very seriously \cite{Zhou:2016}. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM)}
+\begin{itemize}
+	\item The class scores can be written as:
+	\begin{equation}
+	S_c = \sum_k w_k^c \frac{1}{N}\sum_{i,j}f_k(i,j) = \frac{1}{N}\sum_{i,j} \sum_k w_k^c f_k(i,j) = \frac{1}{N}\sum_{i,j} M_c(i,j)
+	\end{equation}
+	$M_c$ is a class activation map, which is the weighted average of the last convolutional layer, with the weights optimized for prediction. 
+	\item In practice, we might decide not to take the last convolutional layer, but one that is more upstream in order to get better spatial resolution. 
+	\item In order to overlay to the original image, we simply upscale (interpolation). 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM) - Results}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.8\textwidth]{../graphics/Vis_CAM_Barbell.pdf}
+  \source{adapted from \cite{Zhou:2016}}
+\end{figure}
+We see that the CAM highlights the regions which are discriminative for the predicted class ("barbell"). 
+\end{frame}
+
+\begin{frame}{Class Activation Mapping (CAM) - Results}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.8\textwidth]{../graphics/Vis_CAM_Dome.pdf}
+  \source{Image taken from  \cite{Zhou:2016}}
+\end{figure}
+We observe the variation of the CAM according to the predicted label. Here the correct label would have been "Dome". 
+\end{frame}
+
+\begin{frame}{Generalization of CAM: Grad-CAM}
+\begin{itemize}
+	\item A drawback of CAM is that we are not really analyzing a given network, but we design a similar network that we can then analyze. 
+	\item This can be avoided by grad-CAM \cite{Selvaraju:2020}, that is based on the evaluation of gradients:
+	\begin{equation}
+		\alpha_k^c = \frac{1}{N}\sum_{i,j} \frac{\partial S_c}{\partial f_k(i,j)}
+	\end{equation}
+	\item If the fully connected layer is replaced by a global average pooling, this is exactly identical to the $w_k^c$ we have calculated in CAM. 
+	\item The final map is then calculated by:
+	\begin{equation}
+	M^{gradCAM}(c) = ReLu(\sum_k \alpha_k^c f_k)
+	\end{equation}
+	The ReLu is used to only account for positive contributions. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Grad-CAM results}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.7\textwidth]{../graphics/Vis_GRADCAM_cat_and_dog.pdf}
+  \source{adapted from \cite{Selvaraju:2020}}
+\end{figure}
+Grad-CAM result for an image with double label ("tiger-cat" and "boxer"). 
+\end{frame}
+
+\begin{frame}{Grad-CAM results: counter-factual image regions}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.7\textwidth]{../graphics/Vis_GRADCAM_Counter.pdf}
+  \source{adapted from \cite{Selvaraju:2020}}
+\end{figure}
+Here, the authors investigated which regions would rather make the network change its prediction. This is simply done by inverting the sign: 
+\begin{equation}
+	\alpha_k^c = \frac{1}{N}\sum_{i,j} -\frac{\partial S_c}{\partial f_k(i,j)}
+\end{equation}
+\end{frame}
+
+\begin{frame}{Grad-CAM results: spotting bias}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.6\textwidth]{../graphics/Vis_GRADCAM_bias.pdf}
+  \source{adapted from \cite{Selvaraju:2020}}
+\end{figure}
+In \cite{Selvaraju:2020}, a neural network was trained to distinguish between two classes "Nurse" and "Doctor". 
+The training set contained a gender bias. We see that the important regions differ when the bias is removed.
+%We see that the decision was then made according to regions in the face and hair. For the unbiased version, the decision was based on the coat color, the sleeves and the stethoscope. 
+\end{frame}
+
+\begin{frame}{Maximally activating images}
+\begin{itemize}
+	\item Another strategy is to generate an image that maximizes a particular neuron, typically a class score:
+	\begin{equation}
+	X^{\ast} = \argmax_{X} S_c(X) - \lambda \|X\|^2
+	\end{equation}
+	\item This can be achieved by a similar technique as training the network, but this time the parameters of the network are fixed and the image is adapted as to maximize the objective function. 
+	\item Here, we do not optimize the softmax, but the class score, as the softmax contains contributions from all classes. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Maximally activating images - Results}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.9\textwidth]{../graphics/Vis_dream.pdf}
+  \source{adapted from \cite{Simonyan:2014}}
+\end{figure}
+We observe various elements the network is trained to react on.
+\end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -278,12 +450,8 @@ Saliency maps can also be used for unsupervised segmentation.
 \begin{frame}{How to map activities back to input pixel space}
 \begin{itemize}
 	\item There are three operations that need to be (approximately) inverted: convolution, ReLu, max-pooling. 
-	\item {\bf Deconvolution:} , \cite{Zeiler:2013} propose to simply take the transposed learned filter. The intuition for this can be seen from this graph:
-	\begin{figure}[htb]
-		\centering
-		\includegraphics[width=.7\textwidth]{../graphics/Vis_deconv_transpose.png}
-	\end{figure}
-	\item {\bf ReLu:} The Relu cannot be inverted. To obtain valid feature maps, there is a ReLu in the deconvolution path.
+	\item {\bf Deconvolution:} \cite{Zeiler:2013} propose to simply convolve the activation map at the upper level with the transposed learned filter (backpropagation). 
+	\item {\bf ReLu:} The Relu cannot be inverted. \cite{Zeiler:2013}  propose to simply put a ReLu in the deconvolution path. 
 \end{itemize}
 \end{frame}
 
@@ -391,6 +559,7 @@ The image analysis community has developed many algorithms for eye detection; he
 	\item Visualization can also allow us to compare different architectures or initialization schemes.
 \end{itemize}
 \end{frame}
+
 
 %\begin{frame}{Spotting problems by visual inspection of the loss}
 %\begin{itemize}
